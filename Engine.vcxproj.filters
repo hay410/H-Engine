@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="エンジン">
+      <UniqueIdentifier>{65f69fba-da05-4cfd-a050-cebad198fd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\カメラ関係">
+      <UniqueIdentifier>{4cdf5469-1696-4a30-be4d-95d466fc57a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\基盤関係">
+      <UniqueIdentifier>{6bae1947-86e4-405b-bcc5-413c69962f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\入力関係">
+      <UniqueIdentifier>{5e8ff79f-15e8-4ad3-a26d-4223c4e68f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\サウンド関係">
+      <UniqueIdentifier>{a3e55331-54d2-44b7-8fd7-f3a7d236b682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\便利系">
+      <UniqueIdentifier>{445df97c-3d10-4d1d-8f53-5710df590110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="アプリケーション">
+      <UniqueIdentifier>{5180ad48-a17a-4cfd-b364-c813a6318f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="アプリケーション\シーン管理系">
+      <UniqueIdentifier>{25ba5165-dde4-4002-85aa-e5f3304c675a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\当たり判定系">
+      <UniqueIdentifier>{58029b6c-2029-4ad6-aa62-4f0c99f4a3d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係">
+      <UniqueIdentifier>{35632d48-9bbc-45e3-9811-55bed7cf6a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\FBXモデル関係">
+      <UniqueIdentifier>{6d6d73fe-0090-4ce0-bdca-e38c89229a4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\オブジェクト関係">
+      <UniqueIdentifier>{517f369b-4255-4907-80b7-1081eb79cdcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\スプライト関係">
+      <UniqueIdentifier>{3f39a384-0938-46e1-bba5-2edf6fa530e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\テクスチャ関係">
+      <UniqueIdentifier>{438d9d51-a1b7-4361-b426-6b5783d71cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\デバックテキスト関係">
+      <UniqueIdentifier>{e74cae3b-f488-4b78-b93a-3dec10bec7e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\パイプライン関係">
+      <UniqueIdentifier>{6e85005c-7b34-40ba-9164-9494b72f41fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\ライト関係">
+      <UniqueIdentifier>{49174cc2-07e7-4915-8f2f-2e471b8c2851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\ライン関係">
+      <UniqueIdentifier>{09b15716-7be2-4c77-9635-dbab53115493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\描画基盤関係">
+      <UniqueIdentifier>{ed9cf405-96e5-4863-affc-c217f7572d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\GSパーティクル関係">
+      <UniqueIdentifier>{e3451611-7241-4bd3-82e0-62cca43e50f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係">
+      <UniqueIdentifier>{be347e63-1ff3-4d6f-8f05-cfb0ecb1b459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダー管理関係">
+      <UniqueIdentifier>{e8c5bbca-b2bd-4998-9a6d-5c458a0bd294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル">
+      <UniqueIdentifier>{badf4334-4b43-4bb3-99cc-b5e42cd77aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Object">
+      <UniqueIdentifier>{cb728262-bef0-4a10-9687-63294f66a5ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\FBX">
+      <UniqueIdentifier>{ee8b4cf4-1db4-4c41-a019-502677b04893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Basic">
+      <UniqueIdentifier>{8183a575-0fec-4bbc-aa29-f97bdd2eb6ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Sprite">
+      <UniqueIdentifier>{6aeb0409-12d0-4910-a884-3e21bc5a509e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\レンダーターゲット関係">
+      <UniqueIdentifier>{d596f801-bb00-4256-945a-60e239542906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\マルチパスレンダリング関係">
+      <UniqueIdentifier>{ff18b6be-f3bc-414d-ad0d-b159fb20e5b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Line">
+      <UniqueIdentifier>{2a3c8dee-c2fe-4895-a350-b496a27210f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Standard">
+      <UniqueIdentifier>{f850d9b0-5bc2-4281-bfce-b5ec4af198ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\OnLight">
+      <UniqueIdentifier>{99d92efb-e30d-4938-976d-4b7406b5caf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\OffLight">
+      <UniqueIdentifier>{f6f132e9-b5f6-43a2-a64d-a1ae14b065e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon">
+      <UniqueIdentifier>{55d00acc-1fdf-4602-ae77-6d1c57c9a62c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle">
+      <UniqueIdentifier>{88da3344-e216-421f-a2ff-ee960e14e078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath">
+      <UniqueIdentifier>{9b0f29f6-86f4-43b8-839d-5fc5e27d5732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Normal">
+      <UniqueIdentifier>{405976e2-591f-4ce3-ac3e-d82d5222bd7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Monochrome">
+      <UniqueIdentifier>{0837acc9-7fa1-4988-a376-fc297890d2fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian">
+      <UniqueIdentifier>{02621546-b12a-4b34-82b4-cef34340adbe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>アプリケーション</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>エンジン\カメラ関係</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXBase.cpp">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteManager.cpp">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeManager.cpp">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>エンジン\入力関係</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>エンジン\サウンド関係</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>エンジン\描画関係\テクスチャ関係</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsAPI.cpp">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugText.cpp">
+      <Filter>エンジン\描画関係\デバックテキスト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionPrimitive.cpp">
+      <Filter>エンジン\当たり判定系</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>エンジン\当たり判定系</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxModelLoader.cpp">
+      <Filter>エンジン\描画関係\FBXモデル関係</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxModel.cpp">
+      <Filter>エンジン\描画関係\FBXモデル関係</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxObject3D.cpp">
+      <Filter>エンジン\描画関係\FBXモデル関係</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline.cpp">
+      <Filter>エンジン\パイプライン関係</Filter>
+    </ClCompile>
+    <ClCompile Include="PipelineManager.cpp">
+      <Filter>エンジン\パイプライン関係</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3DBase.cpp">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="LightManager.cpp">
+      <Filter>エンジン\ライト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawDataBase.cpp">
+      <Filter>エンジン\描画関係\描画基盤関係</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>エンジン\描画関係\ライン関係</Filter>
+    </ClCompile>
+    <ClCompile Include="GSParticle.cpp">
+      <Filter>エンジン\描画関係\GSパーティクル関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderData.cpp">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダー管理関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderStorage.cpp">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダー管理関係</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>エンジン\レンダーターゲット関係</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianSprite.cpp">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiPath.cpp">
+      <Filter>エンジン\マルチパスレンダリング関係</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h">
+      <Filter>エンジン\カメラ関係</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXBase.h">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteManager.h">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeManager.h">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>エンジン\入力関係</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>エンジン\サウンド関係</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>エンジン\描画関係\テクスチャ関係</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsAPI.h">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClInclude>
+    <ClInclude Include="HHelper.h">
+      <Filter>エンジン\便利系</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugText.h">
+      <Filter>エンジン\描画関係\デバックテキスト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionPrimitive.h">
+      <Filter>エンジン\当たり判定系</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>エンジン\当たり判定系</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxModelLoader.h">
+      <Filter>エンジン\描画関係\FBXモデル関係</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxModel.h">
+      <Filter>エンジン\描画関係\FBXモデル関係</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxObject3D.h">
+      <Filter>エンジン\描画関係\FBXモデル関係</Filter>
+    </ClInclude>
+    <ClInclude Include="HEasing.h">
+      <Filter>エンジン\便利系</Filter>
+    </ClInclude>
+    <ClInclude Include="DescriptorHeapManager.h" />
+    <ClInclude Include="Pipeline.h">
+      <Filter>エンジン\パイプライン関係</Filter>
+    </ClInclude>
+    <ClInclude Include="PipelineManager.h">
+      <Filter>エンジン\パイプライン関係</Filter>
+    </ClInclude>
+    <ClInclude Include="HVec.h">
+      <Filter>エンジン\便利系</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3DBase.h">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>エンジン\描画関係\オブジェクト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="LightManager.h">
+      <Filter>エンジン\ライト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>エンジン\基盤関係</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteBase.h">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawDataBase.h">
+      <Filter>エンジン\描画関係\描画基盤関係</Filter>
+    </ClInclude>
+    <ClInclude Include="LineBase.h">
+      <Filter>エンジン\描画関係\ライン関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>エンジン\描画関係\ライン関係</Filter>
+    </ClInclude>
+    <ClInclude Include="GSParticleBase.h">
+      <Filter>エンジン\描画関係\GSパーティクル関係</Filter>
+    </ClInclude>
+    <ClInclude Include="GSParticle.h">
+      <Filter>エンジン\描画関係\GSパーティクル関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderStorage.h">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダー管理関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderData.h">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダー管理関係</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>エンジン\レンダーターゲット関係</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiPath.h">
+      <Filter>エンジン\マルチパスレンダリング関係</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianSprite.h">
+      <Filter>エンジン\描画関係\スプライト関係</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shader\BasicPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Basic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BasicVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Basic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SpritePS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\FBXPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\FBX</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\FBXVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\FBX</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\LineVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Line</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\LinePS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Line</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ObjectVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Standard</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ObjectPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Standard</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ObjectLightPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\OnLight</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ObjectNoLightPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\OffLight</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ObjectToonShaderPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ObjectToonShaderVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GSParticleVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GSParticlePS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GSParticleGS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\MultiPathNormalPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Normal</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\MultiPathNormalVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Normal</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\MultiPathMonochromePS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Monochrome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GaussianXPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GaussianXVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GaussianYPS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\GaussianYVS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shader\BasicShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Basic</Filter>
+    </None>
+    <None Include="Resources\Shader\SpriteShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Sprite</Filter>
+    </None>
+    <None Include="Resources\Shader\FBX.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\FBX</Filter>
+    </None>
+    <None Include="Resources\Shader\LineShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Line</Filter>
+    </None>
+    <None Include="Resources\Shader\ObjectShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Standard</Filter>
+    </None>
+    <None Include="Resources\Shader\ObjectToonShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon</Filter>
+    </None>
+    <None Include="Resources\Shader\GSParticleShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+    </None>
+    <None Include="Resources\Shader\MultiPathShaderHeader.hlsli">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Normal</Filter>
+    </None>
+  </ItemGroup>
+</Project>
