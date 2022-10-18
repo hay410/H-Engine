@@ -1,19 +1,13 @@
 #pragma once
-//#include"SpriteManager.h"
-#include "Singleton.h"
-#include "DirectXBase.h"
-#include "Input.h"
-#include "Camera.h"
-#include "Object3D.h"
-#include "Sprite.h"
-#include "DescriptorHeapManager.h"
-#include "LightManager.h"
+#include"TitleScene.h"
+#include"GameScene.h"
+#include"EndScene.h"
 
 class SceneManager :public Singleton<SceneManager>
 {
 public:
 	/*---- メンバ定数 ----*/
-
+	DirectXBase DxBase;
 
 	enum SceneNum {
 		TITLE_SCENE,				//タイトル画面
@@ -24,6 +18,7 @@ public:
 	/*---- メンバ変数 ----*/
 	
 	int sceneNum;
+	bool isDebug;
 
 	/*---- メンバ関数 ----*/
 	//コンストラクタ
@@ -39,24 +34,7 @@ public:
 	//描画
 	void Draw();
 
-
-	//titleSceneでの更新
-	void UpdateTitleScene();
-
-	//titleSceneでの描画
-	void DrawTitleScene();
-
-	//gameSceneでの更新
-	void UpdateGameScene();
-
-	//gameSceneでの描画
-	void DrawGameScene();
-
-	//endSceneでの更新
-	void UpdateEndScene();
-
-	//endSceneでの描画
-	void DrawEndScene();
-
+	//終了処理
+	void Finalize();
 
 };

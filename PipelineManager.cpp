@@ -241,7 +241,7 @@ void PipelineManager::Init()
 	//GeneratePipeline(PIPELINE_LINE_ALPHA, "Resources/Shader/LinePS.hlsl", "Resources/Shader/LineVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE, BLENDMODE_ALPHA);
 
 	/*スプライト用のパイプライン*/
-	//GeneratePipeline(PIPELINE_SPRITE_ADD, "Resources/Shader/SpritePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
+	GeneratePipeline(PIPELINE_SPRITE_ADD, "Resources/Shader/SpritePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
 	//GeneratePipeline(PIPELINE_SPRITE_ALPHA, "Resources/Shader/SpritePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
 
 	/*オブジェクト用のパイプライン*/
@@ -254,11 +254,13 @@ void PipelineManager::Init()
 	/*GSパーティクル用のパイプライン*/
 	//GeneratePipeline(PIPELINE_GSPARTICLE_NOLIGHT_ALPHA, "Resources/Shader/GSParticlePS.hlsl", "Resources/Shader/GSParticleVS.hlsl", "Resources/Shader/GSParticleGS.hlsl", 1, inputLayoutPos, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT, BLENDMODE_ALPHA);
 	/*マルチパスレンダリング用のパイプライン*/
-	//GeneratePipeline(PIPELINE_MULTIPATH_NORMAL_ADD, "Resources/Shader/MultiPathNormalPS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
-	//GeneratePipeline(PIPELINE_MULTIPATH_NORMAL_ALPHA, "Resources/Shader/MultiPathNormalPS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
-	//GeneratePipeline(PIPELINE_MULTIPATH_MONOCHROME_ADD, "Resources/Shader/MultiPathMonochromePS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
-	//GeneratePipeline(PIPELINE_MULTIPATH_MONOCHROME_ALPHA, "Resources/Shader/MultiPathMonochromePS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
-	//GeneratePipeline(PIPELINE_MULTIPATH_GAUSSIAN_X_ALPHA, "Resources/Shader/GaussianXPS.hlsl", "Resources/Shader/GaussianXVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
-	//GeneratePipeline(PIPELINE_MULTIPATH_GAUSSIAN_Y_ALPHA, "Resources/Shader/GaussianYPS.hlsl", "Resources/Shader/GaussianYVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
-
+	GeneratePipeline(PIPELINE_MULTIPATH_NORMAL_ADD, "Resources/Shader/MultiPathNormalPS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
+	GeneratePipeline(PIPELINE_MULTIPATH_NORMAL_ALPHA, "Resources/Shader/MultiPathNormalPS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
+	GeneratePipeline(PIPELINE_MULTIPATH_MONOCHROME_ADD, "Resources/Shader/MultiPathMonochromePS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
+	GeneratePipeline(PIPELINE_MULTIPATH_MONOCHROME_ALPHA, "Resources/Shader/MultiPathMonochromePS.hlsl", "Resources/Shader/MultiPathNormalVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
+	GeneratePipeline(PIPELINE_MULTIPATH_GAUSSIAN_X_ALPHA, "Resources/Shader/GaussianXPS.hlsl", "Resources/Shader/GaussianXVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
+	GeneratePipeline(PIPELINE_MULTIPATH_GAUSSIAN_Y_ALPHA, "Resources/Shader/GaussianYPS.hlsl", "Resources/Shader/GaussianYVS.hlsl", 3, inputLayout, 3, const2tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
+	
+	GeneratePipeline(PIPELINE_SPRITE_MIXE_8TEXTURE_ADD, "Resources/Shader/Add8TexturePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 9, const1Tex8, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
+	GeneratePipeline(PIPELINE_SPRITE_LUMINANCE_ADD, "Resources/Shader/LuminancePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD, D3D12_CULL_MODE_BACK, DXGI_FORMAT_R32G32B32A32_FLOAT);
 }

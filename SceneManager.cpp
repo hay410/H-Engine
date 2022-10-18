@@ -1,8 +1,23 @@
 #include"SceneManager.h"
+#include"TitleScene.h"
+#include"GameScene.h"
+#include"EndScene.h"
 
 SceneManager::SceneManager()
 {
-	sceneNum = TITLE_SCENE;
+	sceneNum = GAME_SCENE;
+	isDebug = true;
+
+	DxBase.Init();
+
+	Camera::Instance()->Init();
+
+	FbxModelLoader::Instance()->Init(DxBase.dev);
+	FbxObject3d::SetDevice(DxBase.dev);
+	FbxObject3d::CreateGraphicsPipeline();
+
+	DescriptorHeapManager::Instance()->GenerateDescriptorHeap();
+	PipelineManager::Instance()->Init();
 }
 
 void SceneManager::Init()
@@ -16,57 +31,59 @@ void SceneManager::Update()
 	switch (sceneNum) {
 	case TITLE_SCENE:
 		//タイトル画面での更新処理
- 		UpdateTitleScene();
+		TitleScene::Instance()->Update();
+		if (Input::Instance()->isKeyTrigger(DIK_SPACE) && isDebug) {
+			sceneNum = GAME_SCENE;
+		}
+
 		break;
 	case GAME_SCENE:
 		//ゲームプレイ中での更新処理
-		UpdateGameScene();
+		GameScene::Instance()->Update();
+		if (Input::Instance()->isKeyTrigger(DIK_SPACE) && isDebug) {
+			sceneNum = END_SCENE;
+		}
 		break;
 	case END_SCENE:
 		//エンド画面での更新処理
-		UpdateEndScene();
+		EndScene::Instance()->Update();
+		if (Input::Instance()->isKeyTrigger(DIK_SPACE) && isDebug) {
+			sceneNum = TITLE_SCENE;
+		}
 		break;
+	}
+	//エスケープが押されたらループから抜ける(デバッグ用)
+	if (Input::Instance()->isKeyTrigger(DIK_ESCAPE) && isDebug)
+	{
+		exit(0);
 	}
 }
 
 void SceneManager::Draw()
 {
+	//描画前処理
+	DxBase.BeforeDrawing();
+
 	switch (sceneNum) {
 	case TITLE_SCENE:
 		//タイトル画面での更新処理
-		DrawTitleScene();
+		TitleScene::Instance()->Draw();
 		break;
 	case GAME_SCENE:
 		//ゲームプレイ中での更新処理
-		DrawGameScene();
+		GameScene::Instance()->Draw();
 		break;
 	case END_SCENE:
 		//エンド画面での更新処理
-		DrawEndScene();
+		EndScene::Instance()->Draw();
 		break;
 	}
+
+	//描画後処理
+	DxBase.AfterDrawing();
 }
 
-void SceneManager::UpdateTitleScene()
+void SceneManager::Finalize()
 {
-}
-
-void SceneManager::DrawTitleScene()
-{
-}
-
-void SceneManager::UpdateGameScene()
-{
-}
-
-void SceneManager::DrawGameScene()
-{
-}
-
-void SceneManager::UpdateEndScene()
-{
-}
-
-void SceneManager::DrawEndScene()
-{
+	FbxModelLoader::Instance()->Fainalize();
 }

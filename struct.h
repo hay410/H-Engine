@@ -171,28 +171,28 @@ struct BasicDrawingData {
 //	XMFLOAT3 pos;								//座標
 //};
 
-
-struct SpriteMultiTexture {
-	/*-----各種基本データ-----*/
-	bool isDisplay = true;						//描画するかどうか
-	vector<int> textureID;						//テクスチャのIDナンバー
-	int projectionID;							//どの投影をするかのID
-	int piplineID;								//使用するパイプラインの名前
-	/*-----頂点データ関係-----*/
-	vector<Vertex> vertex;						//頂点
-	ComPtr<ID3D12Resource> vertBuff;			//頂点バッファ
-	D3D12_VERTEX_BUFFER_VIEW vbView;			//頂点バッファビュー
-	/*-----定数データ関係-----*/
-	ConstBufferDataB0 constBufferDataB0;		//定数 行列や視点座標、カラーなど
-	ComPtr<ID3D12Resource> constBuffB0;			//定数バッファ
-	ComPtr<ID3D12DescriptorHeap> constDescHeap;	//CBV用ディスクリプタヒープ
-	/*-----各種行列-----*/
-	XMMATRIX scaleMat;							//スケーリング行列
-	XMMATRIX rotationMat;						//回転行列(集積値)
-	XMMATRIX positionMat;						//座標行列
-	/*-----デバッグor当たり判定用-----*/
-	XMFLOAT3 pos;								//座標
-};
+//
+//struct SpriteMultiTexture {
+//	/*-----各種基本データ-----*/
+//	bool isDisplay = true;						//描画するかどうか
+//	vector<int> textureID;						//テクスチャのIDナンバー
+//	int projectionID;							//どの投影をするかのID
+//	int piplineID;								//使用するパイプラインの名前
+//	/*-----頂点データ関係-----*/
+//	vector<Vertex> vertex;						//頂点
+//	ComPtr<ID3D12Resource> vertBuff;			//頂点バッファ
+//	D3D12_VERTEX_BUFFER_VIEW vbView;			//頂点バッファビュー
+//	/*-----定数データ関係-----*/
+//	ConstBufferDataB0 constBufferDataB0;		//定数 行列や視点座標、カラーなど
+//	ComPtr<ID3D12Resource> constBuffB0;			//定数バッファ
+//	ComPtr<ID3D12DescriptorHeap> constDescHeap;	//CBV用ディスクリプタヒープ
+//	/*-----各種行列-----*/
+//	XMMATRIX scaleMat;							//スケーリング行列
+//	XMMATRIX rotationMat;						//回転行列(集積値)
+//	XMMATRIX positionMat;						//座標行列
+//	/*-----デバッグor当たり判定用-----*/
+//	XMFLOAT3 pos;								//座標
+//};
 
 //マルチパスレンダリング用の定数構造体
 struct ConstBufferDataMultiPath {

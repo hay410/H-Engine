@@ -6,7 +6,7 @@
 #include "LightManager.h"
 #include "DirectXBase.h"
 
-void Object3D::Generate(XMFLOAT3 centerPos, int projectionID, int pipelineID, string directoryPath, string modelFileName, LPCWSTR textureFileName, bool isSmoothing)
+void Object3D::Generate(XMFLOAT3 centerPos, int projectionID, int pipelineID, string modelName, wchar_t* textureFileName, bool isSmoothing)
 {
 	// 各変数を初期化
 	isAlreadyMapB1 = false;
@@ -38,10 +38,17 @@ void Object3D::Generate(XMFLOAT3 centerPos, int projectionID, int pipelineID, st
 	// ディスクリプタヒープの生成
 	HRESULT resultBuff = DirectXBase::Instance()->dev->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&constDescHeap));
 
+	////string directoryTextureFileName = directoryPath + modelName + "/" + textureFileName;
+	//wchar_t* LdirectoryTextureFileName = LdirectoryPath;
+	//wcscat_s(*LdirectoryTextureFileName, sizeof(LdirectoryTextureFileName), textureFileName);
+	////ConvertStringToWchar_t(directoryTextureFileName, LdirectoryTextureFileName, 100);
+
 	// テクスチャをロード
 	textureID.push_back(TextureManager::Instance()->LoadTexture(textureFileName));
 
 	// objファイルをロード
+	string modelFileName = modelName + "/" + modelName + ".obj";
+
 	ObjectData objectDataBuffer;
 	ModelLoader::LoadObj(directoryPath, modelFileName, objectDataBuffer, isSmoothing);
 

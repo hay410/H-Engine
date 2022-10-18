@@ -29,7 +29,7 @@ void Camera::GenerateMatView()
 
 void Camera::Init()
 {
-	eye = Vec3(0, 5, 10);
+	eye = Vec3(0, 60, 200);
 	target = Vec3(0, 0, 0);
 	up = Vec3(0, 1, 0);
 	rotationMat = XMMatrixIdentity();
@@ -43,24 +43,66 @@ void Camera::Init()
 
 }
 
-void Camera::Update()
+void Camera::Update(const Vec3&pos)
 {
 
-	forwardVec.x = cosf(angleXZ);
-	forwardVec.z = sinf(angleXZ);
+	//forwardVec.x = cosf(angleXZ);
+	//forwardVec.z = sinf(angleXZ);
 
 
-	// 視点が限界を超えないようにする。
-	if (1.0f < forwardVec.y) forwardVec.y = 1.0f;
-	if (forwardVec.y < -1.0f) forwardVec.y = -1.0f;
+	//// 視点が限界を超えないようにする。
+	//if (1.0f < forwardVec.y) forwardVec.y = 1.0f;
+	//if (forwardVec.y < -1.0f) forwardVec.y = -1.0f;
 
-	// 視点座標から視点点座標を求める。
-	const float EYE_TARGET = 100.0f;
-	target = eye + forwardVec * EYE_TARGET;
+	//// 視点座標から視点点座標を求める。
+	//const float EYE_TARGET = 100.0f;
+	//target = eye + forwardVec * EYE_TARGET;
 
 	// 上ベクトルを求める。
+/*	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER))
+	{
+		forwardVec = Vec3(0, 0, 0) - pos;
+		forwardVec.Normalize();
+		forwardVec.x += 0.5f;
+		forwardVec.y -= 0.3f;
+		forwardVec.z += 0.5f;
+		forwardVec.Normalize();
+		eye = forwardVec * -200.0f;
+		eye += pos;
+		target = forwardVec * 200.0f;
+		target += pos;
+	}
+	else */{
+		XMFLOAT2 rightStick = {};
+		rightStick.x = Input::Instance()->isPadThumb(XINPUT_THUMB_RIGHTSIDE);
+		if (fabs(rightStick.x) <= 0.2f) { rightStick.x = 0; }
+		rightStick.y = Input::Instance()->isPadThumb(XINPUT_THUMB_RIGHTVERT);
+		if (fabs(rightStick.y) <= 0.2f) { rightStick.y = 0; }
+
+		if (Input::Instance()->isKey(DIK_RIGHT)) { rightStick.x = 1.0f; }
+		if (Input::Instance()->isKey(DIK_LEFT)) { rightStick.x = -1.0f; }
+		if (Input::Instance()->isKey(DIK_UP)) { rightStick.y = 1.0f; }
+		if (Input::Instance()->isKey(DIK_DOWN)) { rightStick.y = -1.0f; }
 
 
+		angleXZ -= rightStick.x * ROT_UNIT;
+
+		float rot_x = cosf(angleXZ) * 1.0f;
+		float rot_y = sinf(angleXZ) * 1.0f;
+
+		forwardVec = Vec3(rot_x, -0.3f, rot_y);
+		forwardVec.Normalize();
+
+		eye = forwardVec * -200.0f;
+		eye += pos;
+		target = forwardVec * 200.0f;
+		target += pos;
+	}
+	//float add = rightStick.y * ADD_UNIT;
+	//eye.y += add;
+	//target -= add;
+
+	//AddRotationXZ(rot);
 }
 
 void Camera::AddRotation(const float& RotX, const float& RotY, const float& RotZ)

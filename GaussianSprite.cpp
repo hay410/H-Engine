@@ -157,7 +157,7 @@ void GaussianSprite::Draw()
 	DirectXBase::Instance()->cmdList->SetDescriptorHeaps(_countof(ppHeaps2), ppHeaps2);
 
 	// シェーダーリソースビュー設定コマンド
-	for (int i = 0; i < textureID.size(); ++i) {
+	for (int i = 0; i < textureID.size() - 1; ++i) {
 		DirectXBase::Instance()->cmdList->SetGraphicsRootDescriptorTable(i + 2, TextureManager::Instance()->GetSRV(textureID[i]));
 	}
 

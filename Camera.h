@@ -33,7 +33,9 @@ private:
 	const float EYE_PLAYER_DISTANCE = 100;			//プレイヤーと視点の距離
 	const float TARGET_PLAYER_DISTNACE = 50;		//プレイヤーと注視点の距離
 	const float TARGET_UPPER = 50;					//ターゲットを上にずらす量
-#define MAX_ANGLEOFVIEW 100.0f						//最大画角
+	const float MAX_ANGLEOFVIEW = 100.0f;						//最大画角
+	const float ROT_UNIT = 0.05f;
+	const float ADD_UNIT = 10.0f;
 
 public:
 
@@ -48,7 +50,7 @@ public:
 	void GenerateMatView();
 
 	//更新処理
-	void Update();
+	void Update(const Vec3& pos);
 
 	// 回転
 	void AddRotation(const float& RotX, const float& RotY, const float& RotZ);

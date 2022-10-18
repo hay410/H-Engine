@@ -103,9 +103,6 @@
     <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon">
       <UniqueIdentifier>{55d00acc-1fdf-4602-ae77-6d1c57c9a62c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle">
-      <UniqueIdentifier>{88da3344-e216-421f-a2ff-ee960e14e078}</UniqueIdentifier>
-    </Filter>
     <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath">
       <UniqueIdentifier>{9b0f29f6-86f4-43b8-839d-5fc5e27d5732}</UniqueIdentifier>
     </Filter>
@@ -117,6 +114,15 @@
     </Filter>
     <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian">
       <UniqueIdentifier>{02621546-b12a-4b34-82b4-cef34340adbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\GSParticle">
+      <UniqueIdentifier>{88da3344-e216-421f-a2ff-ee960e14e078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="エンジン\描画関係\シェーダー関係\シェーダーファイル\便利系">
+      <UniqueIdentifier>{0f254d10-ee89-4c18-beff-a11e5ef0b65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="アプリケーション\プレイヤー関係">
+      <UniqueIdentifier>{5153638a-90c1-409b-8f00-8bbafacffa40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +222,18 @@
     <ClCompile Include="MultiPath.cpp">
       <Filter>エンジン\マルチパスレンダリング関係</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>アプリケーション\プレイヤー関係</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClCompile>
+    <ClCompile Include="EndScene.cpp">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -278,7 +296,6 @@
     <ClInclude Include="HEasing.h">
       <Filter>エンジン\便利系</Filter>
     </ClInclude>
-    <ClInclude Include="DescriptorHeapManager.h" />
     <ClInclude Include="Pipeline.h">
       <Filter>エンジン\パイプライン関係</Filter>
     </ClInclude>
@@ -339,6 +356,21 @@
     <ClInclude Include="GaussianSprite.h">
       <Filter>エンジン\描画関係\スプライト関係</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>アプリケーション\プレイヤー関係</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClInclude>
+    <ClInclude Include="EndScene.h">
+      <Filter>アプリケーション\シーン管理系</Filter>
+    </ClInclude>
+    <ClInclude Include="DescriptorHeapManager.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -384,13 +416,13 @@
       <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GSParticleVS.hlsl">
-      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSParticle</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GSParticlePS.hlsl">
-      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSParticle</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GSParticleGS.hlsl">
-      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSParticle</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\MultiPathNormalPS.hlsl">
       <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Normal</Filter>
@@ -413,6 +445,12 @@
     <FxCompile Include="Resources\Shader\GaussianYVS.hlsl">
       <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Gaussian</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shader\LuminancePS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\便利系</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Add8TexturePS.hlsl">
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\便利系</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\BasicShaderHeader.hlsli">
@@ -434,7 +472,7 @@
       <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\Object\Toon</Filter>
     </None>
     <None Include="Resources\Shader\GSParticleShaderHeader.hlsli">
-      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSparticle</Filter>
+      <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\GSParticle</Filter>
     </None>
     <None Include="Resources\Shader\MultiPathShaderHeader.hlsli">
       <Filter>エンジン\描画関係\シェーダー関係\シェーダーファイル\MultiPath\Normal</Filter>

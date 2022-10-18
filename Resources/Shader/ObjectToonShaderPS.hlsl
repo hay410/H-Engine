@@ -1,7 +1,6 @@
 #include "ObjectToonShaderHeader.hlsli"
 
 Texture2D<float4> tex : register(t0); //0番スロットに設定されてテクスチャ
-Texture2D<float4> palette : register(t1); //1番スロットに設定されてテクスチャ
 SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 
 float4 main(VSOutput input) : SV_TARGET
@@ -67,14 +66,53 @@ float4 main(VSOutput input) : SV_TARGET
         }
     }
 
-    //影の色のRGBの平均を求める
-    float shadeColorU = (shadeColor.r + shadeColor.g + shadeColor.b) / 3.0f;
+    //赤成分
+    float buff = 0.35f;
+    float buff2 = 0.65f;
+    float buff3 = 1.0f;
+    if (shadeColor.r < buff)
+    {
+        shadeColor.r = buff;
+    }
+    else if (shadeColor.r < buff2)
+    {
+        shadeColor.r = buff2;
+    }
+    else
+    {
+        shadeColor.r = buff3;
+    }
 
-    //最終的なライティングの色からuの値を求める
-    float4 paletteColor = palette.Sample(smp, float2(shadeColorU, 0.5f));
+    //緑成分
+    if (shadeColor.g < buff)
+    {
+        shadeColor.g = buff;
+    }
+    else if (shadeColor.g < buff2)
+    {
+        shadeColor.g = buff2;
+    }
+    else
+    {
+        shadeColor.g = buff3;
+    }
+
+    //青成分
+    if (shadeColor.b < buff)
+    {
+        shadeColor.b = buff;
+    }
+    else if (shadeColor.b < buff2)
+    {
+        shadeColor.b = buff2;
+    }
+    else
+    {
+        shadeColor.b = buff3;
+    }
 
     //テクスチャの色
     float4 texcolor = tex.Sample(smp, input.uv);
-    return (paletteColor * texcolor) * color;
+    return (shadeColor * texcolor) * color;
 
 }

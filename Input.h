@@ -117,7 +117,7 @@ public:
 		return (state.Gamepad.wButtons & pad) && !(oldstate.Gamepad.wButtons & pad);
 	}
 
-	bool isPadEnd(int pad)
+	bool isPadRelease(int pad)
 	{
 		return !(state.Gamepad.wButtons & pad) && (oldstate.Gamepad.wButtons & pad);
 	}
@@ -216,7 +216,7 @@ public:
 		}
 	}
 
-	float isPadTriEnd(int pad)
+	float isPadTriRelease(int pad)
 	{
 		switch (pad)
 		{

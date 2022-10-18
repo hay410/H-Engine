@@ -46,8 +46,7 @@ public:
 	void SetRenderTargets(UINT num, RenderTarget* renderTargets[]);
 
 	//ガウスぼかし
-	//void GaussianBlur(SpriteMultiPath xBlur, RenderTarget xBlurTarget, SpriteMultiPath yBlur, RenderTarget yBlurTarget);
-	void GaussianBlur(XMFLOAT2 textureSize, float blurAmount, int blurCount, int targetTextureID, RenderTarget& exportTarget);
+	void GaussianBlur(XMFLOAT2 textureSize, float blurAmount, int targetTextureID, RenderTarget& exportTarget);
 	//ガウスぼかしのぼかし量を設定
 	void SetGaussianAmount(GaussianSprite& xBlur, GaussianSprite& yBlur, float amount);
 	//重みの計算

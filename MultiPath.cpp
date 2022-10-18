@@ -108,24 +108,7 @@ void MultiPath::SetRenderTargets(UINT num, RenderTarget* renderTargets[])
 
 }
 
-//void MultiPath::GaussianBlur(SpriteMultiPath xBlur, RenderTarget xBlurTarget, SpriteMultiPath yBlur, RenderTarget yBlurTarget)
-//{
-//	//レンダーターゲットを横ブラーに設定
-//	MultiPath::Instance()->SetRenderTargetAndClear(xBlurTarget);
-//	//レンダーターゲットに描画
-//	ObjectManager::Instance()->DrawSpriteMultiPath(xBlur);
-//	//レンダーターゲットへの書き込み完了待ち
-//	MultiPath::Instance()->ResourceBarrierAfter(xBlurTarget);
-//
-//	//レンダーターゲットを縦ブラーに設定
-//	MultiPath::Instance()->SetRenderTargetAndClear(yBlurTarget);
-//	//レンダーターゲットに描画
-//	ObjectManager::Instance()->DrawSpriteMultiPath(yBlur);
-//	//レンダーターゲットへの書き込み完了待ち
-//	MultiPath::Instance()->ResourceBarrierAfter(yBlurTarget);
-//}
-
-void MultiPath::GaussianBlur(XMFLOAT2 textureSize, float blurAmount, int blurCount, int targetTextureID, RenderTarget& exportTarget)
+void MultiPath::GaussianBlur(XMFLOAT2 textureSize, float blurAmount, int targetTextureID, RenderTarget& exportTarget)
 {
 	/*-----ぼかし量を設定-----*/
 	SetGaussianAmount(gaussian.gaussXSprite, gaussian.gaussYSprite, blurAmount);
@@ -155,21 +138,6 @@ void MultiPath::GaussianBlur(XMFLOAT2 textureSize, float blurAmount, int blurCou
 	/*-----横ブラーの描画テクスチャを再設定-----*/
 	gaussian.gaussXSprite.ChangeTextureID(gaussian.gaussY.textureID, 0);
 
-	/*-----指定回数-1回分ループしてぼかしをかける-----*/
-	//for (int i = 0; i < blurCount - 1; ++i) {
-	//	//レンダーターゲットを横ブラーに設定
-	//	MultiPath::Instance()->SetRenderTargetAndClear(gaussian.gaussX);
-	//	//レンダーターゲットに描画
-	//	ObjectManager::Instance()->DrawSpriteMultiPath(gaussian.gaussXSprite);
-	//	//レンダーターゲットへの書き込み完了待ち
-	//	MultiPath::Instance()->ResourceBarrierAfter(gaussian.gaussX);
-	//	//レンダーターゲットを縦ブラーに設定
-	//	MultiPath::Instance()->SetRenderTargetAndClear(gaussian.gaussY);
-	//	//レンダーターゲットに描画
-	//	ObjectManager::Instance()->DrawSpriteMultiPath(gaussian.gaussYSprite);
-	//	//レンダーターゲットへの書き込み完了待ち
-	//	MultiPath::Instance()->ResourceBarrierAfter(gaussian.gaussY);
-	//}
 
 	/*-----最終的にボケた画像をエクスポートターゲットに描画-----*/
 	//レンダーターゲットをエクスポートターゲットに設定
@@ -182,7 +150,6 @@ void MultiPath::GaussianBlur(XMFLOAT2 textureSize, float blurAmount, int blurCou
 	gaussian.gaussXSprite.Draw();
 	//大きさを再設定
 	gaussian.gaussXSprite.ChangePosition(XMFLOAT3(window_width / 2.0f, window_height / 2.0f, 10));
-	//ObjectManager::Instance()->ChangeScale(gaussian.gaussXSprite.scaleMat, XMFLOAT3(1,1, 1));
 	//レンダーターゲットへの書き込み完了待ち
 	MultiPath::Instance()->ResourceBarrierAfter(exportTarget);
 }

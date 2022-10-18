@@ -3,11 +3,14 @@
 
 
 class Object3D : public Object3DBase {
+private:
+	string directoryPath = "Resources/Object/";
+	wchar_t* LdirectoryPath = L"Resources/Object/";
 
 public:
 
 	// 生成処理
-	void Generate(XMFLOAT3 centerPos, int projectionID, int piplineID, string directoryPath, string modelFileName, LPCWSTR textureFileName, bool isSmoothing);
+	void Generate(XMFLOAT3 centerPos, int projectionID, int piplineID, string modelName, wchar_t* textureFileName, bool isSmoothing = false);
 
 	// 描画処理
 	void Draw();
@@ -28,5 +31,10 @@ public:
 
 	// 頂点バッファを取得する。
 	inline Microsoft::WRL::ComPtr<ID3D12Resource> GetVertexBuff() { return vertBuff; }
+
+	void ConvertStringToWchar_t(string STRING, wchar_t* WCHAR_STRING, int ARRAY_SIZE)
+	{
+		MultiByteToWideChar(CP_ACP, 0, STRING.c_str(), -1, WCHAR_STRING, ARRAY_SIZE);
+	}
 
 };

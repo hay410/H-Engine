@@ -181,7 +181,7 @@ void ModelLoader::LoadObj(string directoryPath, string fileName, ObjectData& obj
 		file.open(directoryPath + fileName);
 		//ファイルオープン失敗をチェック
 		if (file.fail()) {
-			assert(0);
+			//assert(0);
 		}
 		//一行ずつ読み込む
 		string line;
@@ -471,7 +471,7 @@ void ModelLoader::LoadObjMaterial(const string& materialFileName, ModelData& mod
 	file.open(materialFileName);
 	//ファイルオープン失敗をチェック
 	if (file.fail()) {
-		assert(0);
+		//assert(0);
 	}
 	//一行ずつ読み込む
 	string line;

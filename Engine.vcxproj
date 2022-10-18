@@ -84,7 +84,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)lib\fbx_sdk\include</IncludePath>
+    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -160,8 +160,10 @@
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DirectXBase.cpp" />
     <ClCompile Include="DrawDataBase.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="FbxModel.cpp" />
     <ClCompile Include="FbxModelLoader.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GaussianSprite.cpp" />
     <ClCompile Include="GSParticle.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="PipelineManager.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="ShaderStorage.cpp" />
@@ -184,6 +187,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WindowsAPI.cpp" />
     <ClCompile Include="Line.cpp" />
   </ItemGroup>
@@ -195,9 +199,11 @@
     <ClInclude Include="DescriptorHeapManager.h" />
     <ClInclude Include="DirectXBase.h" />
     <ClInclude Include="DrawDataBase.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="FbxModel.h" />
     <ClInclude Include="FbxModelLoader.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="GaussianSprite.h" />
     <ClInclude Include="GSParticle.h" />
     <ClInclude Include="GSParticleBase.h" />
@@ -216,6 +222,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="PipelineManager.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="ShaderStorage.h" />
@@ -228,6 +235,7 @@
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="WindowsAPI.h" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +244,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shader\Add8TexturePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -317,6 +332,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\LuminancePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\Shader\MultiPathMonochromePS.hlsl">
