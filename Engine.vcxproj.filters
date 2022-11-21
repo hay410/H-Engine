@@ -124,6 +124,9 @@
     <Filter Include="アプリケーション\プレイヤー関係">
       <UniqueIdentifier>{5153638a-90c1-409b-8f00-8bbafacffa40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="アプリケーション\敵関係">
+      <UniqueIdentifier>{e7143cc9-51c1-4544-b6bc-d77f969ddb1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -233,6 +236,12 @@
     </ClCompile>
     <ClCompile Include="EndScene.cpp">
       <Filter>アプリケーション\シーン管理系</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>アプリケーション\敵関係</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>アプリケーション\敵関係</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +379,12 @@
     </ClInclude>
     <ClInclude Include="DescriptorHeapManager.h">
       <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>アプリケーション\敵関係</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>アプリケーション\敵関係</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

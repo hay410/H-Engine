@@ -5,16 +5,18 @@
 #include"MultiPath.h"
 #include "GaussianSprite.h"
 #include"Player.h"
+#include"Enemy.h"
 
 class GameScene :public Singleton<GameScene>
 {
-public:
+private:
 	/*---- メンバ定数 ----*/
 
 
 	/*---- メンバ変数 ----*/
 
 	Player player;
+	//Enemy enemy;
 	Object3D skydome;
 	Object3D kariStage;
 	XMFLOAT3 lightpos;
@@ -23,6 +25,11 @@ public:
 	//コンストラクタ
 	GameScene();
 	friend Singleton<GameScene>;
+
+	//当たり判定
+	void Collition();
+
+public:
 
 	//初期化
 	void Init();

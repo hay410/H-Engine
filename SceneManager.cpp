@@ -32,24 +32,14 @@ void SceneManager::Update()
 	case TITLE_SCENE:
 		//タイトル画面での更新処理
 		TitleScene::Instance()->Update();
-		if (Input::Instance()->isKeyTrigger(DIK_SPACE) && isDebug) {
-			sceneNum = GAME_SCENE;
-		}
-
 		break;
 	case GAME_SCENE:
 		//ゲームプレイ中での更新処理
 		GameScene::Instance()->Update();
-		if (Input::Instance()->isKeyTrigger(DIK_SPACE) && isDebug) {
-			sceneNum = END_SCENE;
-		}
 		break;
 	case END_SCENE:
 		//エンド画面での更新処理
 		EndScene::Instance()->Update();
-		if (Input::Instance()->isKeyTrigger(DIK_SPACE) && isDebug) {
-			sceneNum = TITLE_SCENE;
-		}
 		break;
 	}
 	//エスケープが押されたらループから抜ける(デバッグ用)
