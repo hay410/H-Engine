@@ -4,18 +4,20 @@
 Enemy::Enemy()
 {
 	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "King", L"Resources/Object/King/color.png");
+	sphere.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_NOLIGHT_ALPHA, "Ball", L"Resources/white1x1.png");
 	position = XMFLOAT3(0, 0, 0);
 	object.ChangeScale({ 20,20,20 });
+	sphere.ChangeScale({ 10,10,10 });
 	forwardVec = Vec3(0, 0, 1);
 	//angle = 0;
 	radius = RADIUS;
 	previousForwardVec = forwardVec;
 	speed = MAX_SPEED;
 	isSway = false;
-	isLockOn = false;
 	isGuard = false;
 	isAlive = false;
 	isJab = false;
+	isHit = false;
 	jabStartTmier = 0;
 	jabHitTimer = 0;
 	jabEndTimer = 0;
@@ -27,6 +29,10 @@ Enemy::Enemy()
 	upperStartTmier = 0;
 	upperHitTimer = 0;
 	upperEndTimer = 0;
+	availableAttack = false;
+	state = STATE::WAIT;
+	stateTimer = 0;
+	guardTimer = 0;
 }
 
 void Enemy::Generate(const Vec3& position,const Vec3&playerPos)
@@ -38,6 +44,24 @@ void Enemy::Generate(const Vec3& position,const Vec3&playerPos)
 
 void Enemy::Move(const Vec3& playerPos)
 {
+	//プレイヤーとの距離によって状態を変える
+	if (!isSway) {
+		Vec3 pVec = position - playerPos;
+		float pLength = pVec.Length();
+		if (pLength >= WALK_DISTANCE && pLength <= RUN_DISTANCE) {
+			speed = WALK_SPEED;
+			availableAttack = false;
+		}
+		else if (pLength >= RUN_DISTANCE) {
+			speed = MAX_SPEED;
+			availableAttack = false;
+		}
+		else if (pLength <= WALK_DISTANCE) {
+			speed = 0.0f;
+			availableAttack = true;
+		}
+	}
+
 	//外積を使って左右判定をする
 	float crossBuff = HHelper::Cross2D(XMFLOAT2(playerPos.x - position.x, playerPos.z - position.z), XMFLOAT2(sinf(angle), cosf(angle)));
 	if (crossBuff > 0) {
@@ -46,67 +70,101 @@ void Enemy::Move(const Vec3& playerPos)
 	else if (crossBuff < 0) {
 		angle -= ADD_ANGLE;
 	}
+	float storageAngle = angle;
 
-	position += XMFLOAT3(sinf(angle) * speed, 0, cosf(angle) * speed);
+	Sway();
+
+	if(isSway) {
+		if (random == 0) {
+			angle += HHelper::H_PI_F / 2;
+		}
+		else {
+			angle -= HHelper::H_PI_F / 2;
+		}
+	}
+
+	position += Vec3(sinf(angle), 0, cosf(angle)) * speed;
+
+	angle = storageAngle;
 }
 
-void Enemy::Walk()
+void Enemy::StateControl()
 {
-	//ロックオン中は移動速度を遅くする
-	isLockOn = false;
-	//ボタンかキーを押してる間はロックオン状態とする
-	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER) || Input::Instance()->isKey(DIK_LSHIFT)) { isLockOn = true; }
-	//ロックオン状態に移行したときスピードを変更(１回のみ)
-	if (Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_RIGHT_SHOULDER) || Input::Instance()->isKeyTrigger(DIK_LSHIFT)) { speed = WALK_SPEED; }
-	//ロックオンをやめたときは移動速度を戻す
-	if (Input::Instance()->isPadRelease(XINPUT_GAMEPAD_RIGHT_SHOULDER) || Input::Instance()->isKeyRelease(DIK_LSHIFT)) { speed = MAX_SPEED; }
-
-	forwardVec = previousForwardVec;
-
+	if (availableAttack) {
+		switch (state)
+		{
+		case STATE::WAIT:
+			stateTimer++;
+			if (stateTimer >= MAX_STATE_TIMER) {
+				int random = HHelper::GetRand(1, 6);
+				//int random = 1;
+				switch (random)
+				{
+				case 1:
+					state = STATE::ATTACK;
+					break;
+				case 2:
+					state = STATE::SWAY;
+					break;
+				case 3:
+					state = STATE::GUARD;
+					break;
+				default:
+					state = STATE::ATTACK;
+					break;
+				}
+				stateTimer = 0;
+			}
+			break;
+		case STATE::ATTACK:
+			attackVec = forwardVec;
+			Attack();
+			break;
+		case STATE::SWAY:
+			//スウェイを行っていなければスウェイをさせる
+			if (!isSway) {
+				isSway = true;
+				//入力したときに速度を変更(1回のみ)
+				speed = SWAY_SPEED;
+				random = HHelper::GetRand(0, 1);
+			}
+			break;
+		case STATE::GUARD:
+			isGuard = true;
+			Guard();
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 //スウェイ(回避)
 void Enemy::Sway()
 {
-	//入力情報を得ておく
-	bool input = false;
-	if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_A)) {
-		input = true;
-	}
-
-	//キーが押されていてかつスウェイを行っていなければスウェイをさせる
-	if (input && !isSway) {
-		isSway = true;
-		//入力したときに速度を変更(1回のみ)
-		speed = SWAY_SPEED;
-	}
-
 	//スウェイ中の処理
 	if (isSway) {
 		//速度を徐々に減らす
 		speed -= 2.0f;
 		//自機がロックオン状態の場合は歩き、そうでない場合は走りの速度まで戻す
-		if (!isLockOn) {
-			if (speed <= MAX_SPEED) {
-				speed = MAX_SPEED;
-				isSway = false;
-			}
-		}
-		else
-		{
-			if (speed <= WALK_SPEED) {
-				speed = WALK_SPEED;
-				isSway = false;
-			}
+		
+		if (speed <= MAX_SPEED) {
+			speed = MAX_SPEED;
+			isSway = false;
+			state = STATE::WAIT;
 		}
 	}
 }
 
 void Enemy::Guard()
 {
-	isGuard = false;
-	if (Input::Instance()->isKey(DIK_E) || Input::Instance()->isPad(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-		isGuard = true;
+	if (isGuard) {
+		guardTimer++;
+		if (guardTimer >= MAX_GUARD_TIMER) {
+			isGuard = false;
+			speed = MAX_SPEED;
+			state = STATE::WAIT;
+		}
 	}
 }
 
@@ -121,9 +179,7 @@ void Enemy::Attack()
 void Enemy::Jab()
 {
 	if (!isHook && !isUpper) {
-		if (Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-			isJab = true;
-		}
+		isJab = true;
 	}
 
 	if (!isJab)return;
@@ -140,10 +196,8 @@ void Enemy::Jab()
 			if (jabEndTimer < MAX_JAB_END_TIMER) {
 				jabEndTimer++;
 
-				//攻撃派生の入力を取る
-				if (Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-					isHook = true;
-				}
+				//攻撃派生
+				isHook = true;
 			}
 			else {
 				isJab = false;
@@ -152,13 +206,12 @@ void Enemy::Jab()
 				jabEndTimer = 0;
 			}
 		}
-
 	}
 }
 
 void Enemy::Hook()
 {
-	if (!isHook)return;
+	if (!isHook||isJab)return;
 
 	if (hookStartTmier < MAX_HOOK_START_TIMER) {
 		hookStartTmier++;
@@ -173,9 +226,8 @@ void Enemy::Hook()
 				hookEndTimer++;
 
 				//攻撃派生の入力を取る
-				if (Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-					isUpper = true;
-				}
+				isUpper = true;
+				
 			}
 			else {
 				isHook = false;
@@ -184,13 +236,12 @@ void Enemy::Hook()
 				hookEndTimer = 0;
 			}
 		}
-
 	}
 }
 
 void Enemy::Upper()
 {
-	if (!isUpper)return;
+	if (!isUpper||isHook)return;
 
 	if (upperStartTmier < MAX_HOOK_START_TIMER) {
 		upperStartTmier++;
@@ -209,9 +260,9 @@ void Enemy::Upper()
 				upperStartTmier = 0;
 				upperHitTimer = 0;
 				upperEndTimer = 0;
+				state = STATE::WAIT;
 			}
 		}
-
 	}
 }
 
@@ -223,32 +274,27 @@ void Enemy::Init()
 void Enemy::Update(const Vec3& playerPos)
 {
 	if (!isAlive)return;
+	StateControl();
+	Move(playerPos);
 
-	Vec3 pVec = position - playerPos;
-	float pLength = pVec.Length();
-	if (pLength >= WALK_DISTANCE && pLength <= RUN_DISTANCE) {
-		speed = WALK_SPEED;
-	}
-	else if (pLength >= RUN_DISTANCE) {
-		speed = MAX_SPEED;
-	}
-	else if (pLength <= WALK_DISTANCE) {
-		speed = 0.0f;
-		availableAttack = true;
-	}
+	forwardVec = Vec3(playerPos - position);
+	forwardVec.Normalize();
 
 	XMFLOAT3 pos = position.ConvertXMFLOAT3();
+	attackPos = position + attackVec * ATTACK_RANGE;
+	attackPos.y += 30;
 	bodySphere.center = XMLoadFloat3(&pos);
 	object.ChangePosition(pos);
-	Move(playerPos);
-	//Sway();
-	//Guard();
+	sphere.ChangePosition(attackPos.ConvertXMFLOAT3());
 }
 
 void Enemy::Draw()
 {
 	if (!isAlive)return;
 	object.Draw();
+	if (isHit) {
+		sphere.Draw();
+	}
 }
 
 void Enemy::Dead()

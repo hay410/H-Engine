@@ -14,7 +14,7 @@ class Enemy
 private:
 	//メンバ定数
 	const float MAX_SPEED = 1.0f;
-	const float SWAY_SPEED = 24.0f;
+	const float SWAY_SPEED = 18.0f;
 	const float WALK_SPEED = 0.6f;
 	const int MAX_JAB_START_TIMER = 12;
 	const int MAX_JAB_HIT_TIMER = 6;
@@ -29,23 +29,37 @@ private:
 	const float WALK_DISTANCE = 100.0f;
 	const float RUN_DISTANCE = 200.0f;
 	const float RADIUS = 20.0f;
+	const int MAX_STATE_TIMER = 120;
+	const int MAX_GUARD_TIMER = 300;
+	const float ATTACK_RADIUS = 20.0f;
+	const float ATTACK_RANGE = 35.0f;
+
+	enum class STATE {
+		WAIT,
+		ATTACK,
+		SWAY,
+		GUARD,
+	};
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
 	Object3D object;
-
+	Object3D sphere;
 	Vec3 position;				//座標
 	float radius;
 	float speed;				//速度
 	Vec3 forwardVec;			//正面ベクトル
 	Vec3 previousForwardVec;	//１フレーム前の正面ベクトル
-	float angle;
-	bool isSway;
-	bool isLockOn;
-	bool isGuard;
+	float angle;				//向き
+	bool isSway;				//スウェイ中か
+	bool isGuard;				//ガード中か
+	int guardTimer;				//ガード用のタイマー
 	bool isHit;					//攻撃判定があるときのみ上がるフラグ
-	bool isAlive;
-	bool availableAttack;
+	bool isAlive;				//生存フラグ
+	bool availableAttack;		//攻撃可能
+	int random;					//乱数
+	STATE state;				//状態
+	int stateTimer;				//行動間隔
 
 	//弱パンチ
 	bool isJab;
@@ -68,11 +82,13 @@ private:
 	//当たり判定用
 	Sphere bodySphere;
 	Sphere attackSphere;
+	Vec3 attackPos;
+	Vec3 attackVec;
 
 	//メンバ関数
 	void Move(const Vec3& playerPos);
 
-	void Walk();
+	void StateControl();
 
 	void Sway();
 
