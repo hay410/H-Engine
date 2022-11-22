@@ -6,7 +6,7 @@ class EnemyManager :public Singleton<EnemyManager>
 {
 private:
 	//ƒƒ“ƒo’è”
-	int MAX_VALUE = 10;
+	int MAX_VALUE = 5;
 	//ƒƒ“ƒo•Ï”
 	vector<Enemy> enemy;
 public:
