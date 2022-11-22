@@ -126,10 +126,10 @@ void Player::Walk()
 	isLockOn = false;
 	//ボタンかキーを押してる間はロックオン状態とする
 	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)|| Input::Instance()->isKey(DIK_LSHIFT)) { isLockOn = true; }
-	if (isLockOn) {
+	if (isLockOn && !isSway) {
 		speed = WALK_SPEED;
 	}
-	else {
+	if (!isLockOn && !isSway) {
 		speed = MAX_SPEED;
 	}
 	////ロックオン状態に移行したときスピードを変更(１回のみ)
