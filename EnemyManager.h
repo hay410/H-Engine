@@ -6,7 +6,8 @@ class EnemyManager :public Singleton<EnemyManager>
 {
 private:
 	//ƒƒ“ƒo’è”
-	int MAX_VALUE = 5;
+	int MAX_VALUE = 1;
+	Vec3 attackVec = Vec3();
 	//ƒƒ“ƒo•Ï”
 	vector<Enemy> enemy;
 public:
@@ -23,4 +24,5 @@ public:
 	void Draw();
 
 	Enemy GetEnemy(int i) { return enemy[i]; }
+	Vec3 GetAttackVec() { return attackVec; }
 };

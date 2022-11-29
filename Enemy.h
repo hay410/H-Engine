@@ -33,6 +33,7 @@ private:
 	const int MAX_GUARD_TIMER = 300;
 	const float ATTACK_RADIUS = 20.0f;
 	const float ATTACK_RANGE = 35.0f;
+	const int MAX_HP = 100;
 
 	enum class STATE {
 		WAIT,
@@ -60,6 +61,7 @@ private:
 	int random;					//乱数
 	STATE state;				//状態
 	int stateTimer;				//行動間隔
+	int HP;
 
 	//弱パンチ
 	bool isJab;
@@ -129,6 +131,10 @@ public:
 	Sphere GetBodySphere() { return bodySphere; }
 	Sphere GetAttackSphere() { return attackSphere; }
 	float GetSpeed() { return speed; }
+	Vec3 GetForwardVec() { return forwardVec; }
+	Vec3 GetAttackPos() { return attackPos; }
+	float GetAttackRadius() { return ATTACK_RADIUS; }
+	bool GetIsHit() { return isHit; }
 
 	//セッタ
 	void SetPos(const Vec3& pos) { position = pos; }

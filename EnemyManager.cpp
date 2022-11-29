@@ -54,11 +54,13 @@ void EnemyManager::Update(Player& player)
 	}
 
 	if (player.GetIsAlive()) {
-		if (player.GetIsHit()) {
-			for (int i = 0; i < enemy.size(); ++i) {
-				if (!enemy[i].GetIsAlive())continue;
+		for (int i = 0; i < enemy.size(); ++i) {
+			if (!enemy[i].GetIsAlive())continue;
+			//ƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ“G‚Ì“–‚½‚è”»’è
+			if (player.GetIsHit())
+			{
 				//“G‚Æ“G‚Ì2“_ŠÔ‚Ì‹——£‚ğ‹‚ß‚é
-				Vec3 directionVec = Vec3(player.GetAttackPos() - enemy[i].GetPos().ConvertXMFLOAT3());
+				Vec3 directionVec = Vec3(player.GetAttackPos() - enemy[i].GetPos());
 				float enemyToEnemyDistance = directionVec.Length();
 
 				//‚ ‚éˆê’è‚Ì‹——£—£‚ê‚Ä‚¢‚½‚ç”»’è‚ğs‚í‚È‚¢
@@ -70,6 +72,25 @@ void EnemyManager::Update(Player& player)
 				//“–‚½‚Á‚Ä‚¢‚½ê‡
 				if (enemyToEnemyDistance < TotalRadius) {
 					enemy[i].Dead();
+				}
+			}
+			//“G‚ÌUŒ‚‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
+			if(enemy[i].GetIsHit())
+			{
+				//“G‚Æ“G‚Ì2“_ŠÔ‚Ì‹——£‚ğ‹‚ß‚é
+				Vec3 directionVec = Vec3(player.GetPos() - enemy[i].GetAttackPos());
+				float enemyToEnemyDistance = directionVec.Length();
+
+				//‚ ‚éˆê’è‚Ì‹——£—£‚ê‚Ä‚¢‚½‚ç”»’è‚ğs‚í‚È‚¢
+				const float CertainDistance = 200.0f;
+				if (enemyToEnemyDistance >= CertainDistance)continue;
+
+				//“–‚½‚è”»’è‚ğæ‚é
+				float TotalRadius = player.GetRadius() + enemy[i].GetAttackRadius();
+				//“–‚½‚Á‚Ä‚¢‚½ê‡
+				if (enemyToEnemyDistance < TotalRadius) {
+					player.SetIsKnockBack(true);
+					attackVec = enemy[i].GetForwardVec();
 				}
 			}
 		}

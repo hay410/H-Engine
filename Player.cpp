@@ -9,25 +9,31 @@ Player::Player()
 	object.ChangeScale({ 20,20,20 });
 	sphere.ChangeScale({ 10,10,10 });
 	forwardVec = Vec3(0, 0, 1);
-	//angle = 0;
+	radius = 20.0f;
 	previousForwardVec = forwardVec;
 	speed = MAX_SPEED;
 	isSway = false;
 	isLockOn = false;
 	isGuard = false;
-	isJab = false;
 	isAlive = true;
+
+	isJab = false;
 	jabStartTmier = 0;
 	jabHitTimer = 0;
 	jabEndTimer = 0;
+
 	isHook = false;
 	hookStartTmier = 0;
 	hookHitTimer = 0;
 	hookEndTimer = 0;
+
 	isUpper = false;
 	upperStartTmier = 0;
 	upperHitTimer = 0;
 	upperEndTimer = 0;
+
+	isKnockBack = false;
+	kBackVel = 0.0f;
 }
 
 void Player::Move()
@@ -233,7 +239,6 @@ void Player::Jab()
 				speed = MAX_SPEED;
 			}
 		}
-
 	}
 }
 
@@ -267,7 +272,6 @@ void Player::Hook()
 				speed = MAX_SPEED;
 			}
 		}
-
 	}
 }
 
@@ -300,12 +304,31 @@ void Player::Upper()
 	}
 }
 
+void Player::KnockBack(const Vec3& attackVec)
+{
+	//スウェイ中の処理
+	if (isKnockBack) {
+		Vec3 kBackVec = attackVec * kBackVel;
+		//速度を徐々に減らす
+		kBackVel -= 2.0f;
+
+		if (kBackVel <= 0.0f) {
+			isKnockBack = false;
+		}
+		position += kBackVec;
+	}
+	else
+	{
+		kBackVel = SWAY_SPEED;
+	}
+}
+
 void Player::Init()
 {
 	position = Vec3(-1000, -50, 0);
 }
 
-void Player::Update()
+void Player::Update(const Vec3& attackVec)
 {
 	bodySphere.center = position.ConvertXMVECTOR();
 	object.ChangePosition(position.ConvertXMFLOAT3());
@@ -315,6 +338,7 @@ void Player::Update()
 	sphere.ChangePosition(attackPos.ConvertXMFLOAT3());
 	Move();
 	Sway();
+	KnockBack(attackVec);
 	Attack();
 	Guard();
 }

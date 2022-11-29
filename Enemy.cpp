@@ -13,26 +13,32 @@ Enemy::Enemy()
 	radius = RADIUS;
 	previousForwardVec = forwardVec;
 	speed = MAX_SPEED;
+
 	isSway = false;
 	isGuard = false;
 	isAlive = false;
-	isJab = false;
 	isHit = false;
+
+	isJab = false;
 	jabStartTmier = 0;
 	jabHitTimer = 0;
 	jabEndTimer = 0;
+
 	isHook = false;
 	hookStartTmier = 0;
 	hookHitTimer = 0;
 	hookEndTimer = 0;
+
 	isUpper = false;
 	upperStartTmier = 0;
 	upperHitTimer = 0;
 	upperEndTimer = 0;
+
 	availableAttack = false;
 	state = STATE::WAIT;
 	stateTimer = 0;
 	guardTimer = 0;
+	HP = MAX_HP;
 }
 
 void Enemy::Generate(const Vec3& position,const Vec3&playerPos)

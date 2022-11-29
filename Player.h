@@ -28,6 +28,7 @@ private:
 	const float RADIUS = 40.0f;
 	const float ATTACK_RADIUS = 20.0f;
 	const float ATTACK_RANGE = 35.0f;
+	const int MAX_HP = 300;
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
@@ -43,6 +44,11 @@ private:
 	bool isLockOn;
 	bool isGuard;
 	bool isHit;					//攻撃判定があるときのみ上がるフラグ
+	int HP;
+
+	//ノックバック用
+	bool isKnockBack;
+	float kBackVel;
 
 	//弱パンチ
 	bool isJab;
@@ -84,6 +90,8 @@ private:
 
 	void Upper();
 
+	void KnockBack(const Vec3& attackVec);
+
 public:
 	
 	//コンストラクタ
@@ -93,7 +101,7 @@ public:
 	void Init();
 	
 	//更新
-	void Update();
+	void Update(const Vec3& attackVec);
 	
 	//描画
 	void Draw();
@@ -108,4 +116,5 @@ public:
 	Sphere GetAttackSphere() { return attackSphere; }
 	Vec3 GetAttackPos() { return attackPos; }
 	float GetAttackRadius() { return ATTACK_RADIUS; }
+	void SetIsKnockBack(bool flag) { isKnockBack = flag; }
 };
