@@ -91,6 +91,7 @@ void EnemyManager::Update(Player& player)
 				//“–‚½‚Á‚Ä‚¢‚½ê‡
 				if (enemyToEnemyDistance < TotalRadius) {
 					player.SetIsKnockBack(true);
+					player.SetkBackVel(enemy[i].GetValueKBackVel());
 					attackVec = enemy[i].GetForwardVec();
 					enemy[i].SetIs1Hit(false);
 					player.Damage(enemy[i].GetDamage());

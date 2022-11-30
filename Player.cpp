@@ -325,10 +325,10 @@ void Player::KnockBack(const Vec3& attackVec)
 		}
 		position += kBackVec;
 	}
-	else
-	{
-		kBackVel = SWAY_SPEED;
-	}
+	//else
+	//{
+	//	kBackVel = SWAY_SPEED;
+	//}
 }
 
 void Player::Init()

@@ -198,6 +198,7 @@ void Enemy::Jab()
 			jabHitTimer++;
 			isHit = true;
 			damage = JAB_DAMAGE;
+			valueKBackVel = JAB_KNOCKBACK_POWER;
 		}
 		else {
 			if (jabEndTimer < MAX_JAB_END_TIMER) {
@@ -229,6 +230,7 @@ void Enemy::Hook()
 			hookHitTimer++;
 			isHit = true;
 			damage = HOOK_DAMAGE;
+			valueKBackVel = HOOK_KNOCKBACK_POWER;
 		}
 		else {
 			if (hookEndTimer < MAX_HOOK_END_TIMER) {
@@ -261,6 +263,7 @@ void Enemy::Upper()
 			upperHitTimer++;
 			isHit = true;
 			damage = UPPER_DAMAGE;
+			valueKBackVel = UPPER_KNOCKBACK_POWER;
 		}
 		else {
 			if (upperEndTimer < MAX_HOOK_END_TIMER) {
@@ -275,6 +278,25 @@ void Enemy::Upper()
 				is1Hit = true;
 			}
 		}
+	}
+}
+
+void Enemy::KnockBack(const Vec3& attackVec)
+{
+	//スウェイ中の処理
+	if (isKnockBack) {
+		Vec3 kBackVec = attackVec * kBackVel;
+		//速度を徐々に減らす
+		kBackVel -= 2.0f;
+
+		if (kBackVel <= 0.0f) {
+			isKnockBack = false;
+		}
+		position += kBackVec;
+	}
+	else
+	{
+		kBackVel = SWAY_SPEED;
 	}
 }
 

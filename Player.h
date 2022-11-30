@@ -57,7 +57,8 @@ private:
 
 	//ノックバック用
 	bool isKnockBack;
-	float kBackVel;
+	float kBackVel;			//自分のノックバックに使う加速度
+	float valueKBackVel;	//敵をノックバックさせるために敵に渡す加速度
 
 	//弱パンチ
 	bool isJab;
@@ -133,7 +134,8 @@ public:
 	float GetAttackRadius() { return ATTACK_RADIUS; }
 	bool GetIs1Hit() { return is1Hit; }
 	//セッタ
-	void SetPos(const Vec3& pos) { position = pos; }
-	void SetIsKnockBack(bool flag) { isKnockBack = flag; }
-	void SetIs1Hit(bool flag) { is1Hit = flag; }
+	void SetPos(const Vec3& value) { position = value; }
+	void SetIsKnockBack(bool value) { isKnockBack = value; }
+	void SetIs1Hit(bool value) { is1Hit = value; }
+	void SetkBackVel(float value) { kBackVel = value; }
 };
