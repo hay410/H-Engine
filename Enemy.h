@@ -77,8 +77,8 @@ private:
 
 	//ノックバック用
 	bool isKnockBack;
-	float kBackVel;			//自分のノックバックに使う加速度
-	float valueKBackVel;	//敵をノックバックさせるために敵に渡す加速度
+	float kBackVel;				//自分のノックバックに使う加速度
+	float valueKBackVel;		//敵をノックバックさせるために敵に渡す加速度
 
 	//弱パンチ
 	bool isJab;

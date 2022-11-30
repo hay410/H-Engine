@@ -319,7 +319,7 @@ void Enemy::Update(const Vec3& playerPos, const Vec3& attackVec)
 	forwardVec.Normalize();
 
 	XMFLOAT3 pos = position.ConvertXMFLOAT3();
-	attackPos = position + attackVec * ATTACK_RANGE;
+	attackPos = position + this->attackVec * ATTACK_RANGE;
 	attackPos.y += 30;
 	bodySphere.center = XMLoadFloat3(&pos);
 	object.ChangePosition(pos);
