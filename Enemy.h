@@ -43,7 +43,7 @@ private:
 	const int	MAX_GUARD_TIMER = 300;			//ガード状態のタイマー
 	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
 	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
-	const int	MAX_HP = 100;					//最大HP
+	const int	MAX_HP = 100;						//最大HP
 
 	enum class STATE {
 		WAIT,
