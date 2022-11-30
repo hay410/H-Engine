@@ -16,6 +16,7 @@ Player::Player()
 	isLockOn = false;
 	isGuard = false;
 	isAlive = true;
+	is1Hit = true;
 
 	isJab = false;
 	jabStartTmier = 0;
@@ -34,6 +35,7 @@ Player::Player()
 
 	isKnockBack = false;
 	kBackVel = 0.0f;
+	HP = MAX_HP;
 }
 
 void Player::Move()
@@ -221,6 +223,7 @@ void Player::Jab()
 		if (jabHitTimer < MAX_JAB_HIT_TIMER) {
 			jabHitTimer++;
 			isHit = true;
+			damage = JAB_DAMAGE;
 		}
 		else {
 			if (jabEndTimer < MAX_JAB_END_TIMER) {
@@ -237,6 +240,7 @@ void Player::Jab()
 				jabHitTimer = 0;
 				jabEndTimer = 0;
 				speed = MAX_SPEED;
+				is1Hit = true;
 			}
 		}
 	}
@@ -254,6 +258,7 @@ void Player::Hook()
 		if (hookHitTimer < MAX_HOOK_HIT_TIMER) {
 			hookHitTimer++;
 			isHit = true;
+			damage = HOOK_DAMAGE;
 		}
 		else {
 			if (hookEndTimer < MAX_HOOK_END_TIMER) {
@@ -270,6 +275,7 @@ void Player::Hook()
 				hookHitTimer = 0;
 				hookEndTimer = 0;
 				speed = MAX_SPEED;
+				is1Hit = true;
 			}
 		}
 	}
@@ -287,6 +293,7 @@ void Player::Upper()
 		if (upperHitTimer < MAX_HOOK_HIT_TIMER) {
 			upperHitTimer++;
 			isHit = true;
+			damage = UPPER_DAMAGE;
 		}
 		else {
 			if (upperEndTimer < MAX_HOOK_END_TIMER) {
@@ -298,6 +305,7 @@ void Player::Upper()
 				upperHitTimer = 0;
 				upperEndTimer = 0;
 				speed = MAX_SPEED;
+				is1Hit = true;
 			}
 		}
 
@@ -349,4 +357,17 @@ void Player::Draw()
 	if (isHit) {
 		sphere.Draw();
 	}
+}
+
+void Player::Damage(int damage)
+{
+	HP -= damage;
+	if (HP <= 0) {
+		Dead();
+	}
+}
+
+void Player::Dead()
+{
+	isAlive = false;
 }

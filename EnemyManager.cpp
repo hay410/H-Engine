@@ -57,7 +57,7 @@ void EnemyManager::Update(Player& player)
 		for (int i = 0; i < enemy.size(); ++i) {
 			if (!enemy[i].GetIsAlive())continue;
 			//ƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ“G‚Ì“–‚½‚è”»’è
-			if (player.GetIsHit())
+			if (player.GetIsHit() && player.GetIs1Hit())
 			{
 				//“G‚Æ“G‚Ì2“_ŠÔ‚Ì‹——£‚ð‹‚ß‚é
 				Vec3 directionVec = Vec3(player.GetAttackPos() - enemy[i].GetPos());
@@ -71,11 +71,12 @@ void EnemyManager::Update(Player& player)
 				float TotalRadius = player.GetAttackRadius() + enemy[i].GetRadius();
 				//“–‚½‚Á‚Ä‚¢‚½ê‡
 				if (enemyToEnemyDistance < TotalRadius) {
-					enemy[i].Dead();
+					player.SetIs1Hit(false);
+					enemy[i].Damage(player.GetDamage());
 				}
 			}
 			//“G‚ÌUŒ‚‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
-			if(enemy[i].GetIsHit())
+			if(enemy[i].GetIsHit() && enemy[i].GetIs1Hit())
 			{
 				//“G‚Æ“G‚Ì2“_ŠÔ‚Ì‹——£‚ð‹‚ß‚é
 				Vec3 directionVec = Vec3(player.GetPos() - enemy[i].GetAttackPos());
@@ -91,6 +92,8 @@ void EnemyManager::Update(Player& player)
 				if (enemyToEnemyDistance < TotalRadius) {
 					player.SetIsKnockBack(true);
 					attackVec = enemy[i].GetForwardVec();
+					enemy[i].SetIs1Hit(false);
+					player.Damage(enemy[i].GetDamage());
 				}
 			}
 		}

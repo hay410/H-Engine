@@ -13,27 +13,34 @@ class Enemy
 {
 private:
 	//メンバ定数
-	const float MAX_SPEED = 1.0f;
-	const float SWAY_SPEED = 18.0f;
-	const float WALK_SPEED = 0.6f;
-	const int MAX_JAB_START_TIMER = 12;
-	const int MAX_JAB_HIT_TIMER = 6;
-	const int MAX_JAB_END_TIMER = 30;
-	const int MAX_HOOK_START_TIMER = 8;
-	const int MAX_HOOK_HIT_TIMER = 6;
-	const int MAX_HOOK_END_TIMER = 30;
-	const int MAX_UPPER_START_TIMER = 12;
-	const int MAX_UPPER_HIT_TIMER = 6;
-	const int MAX_UPPER_END_TIMER = 40;
+	const float MAX_SPEED = 1.0f;			//通常の移動速度
+	const float SWAY_SPEED = 18.0f;			//スウェイ時の速度
+	const float WALK_SPEED = 0.6f;			//歩きの速度
+
+	const int MAX_JAB_START_TIMER = 12;		//発生フレーム
+	const int MAX_JAB_HIT_TIMER = 6;		//判定フレーム
+	const int MAX_JAB_END_TIMER = 30;		//後隙フレーム
+	const int JAB_DAMAGE = 15;				//ダメージ量
+
+	const int MAX_HOOK_START_TIMER = 8;		//発生フレーム
+	const int MAX_HOOK_HIT_TIMER = 6;		//判定フレーム
+	const int MAX_HOOK_END_TIMER = 30;		//後隙フレーム
+	const int HOOK_DAMAGE = 20;				//ダメージ量
+
+	const int MAX_UPPER_START_TIMER = 12;	//発生フレーム
+	const int MAX_UPPER_HIT_TIMER = 6;		//判定フレーム
+	const int MAX_UPPER_END_TIMER = 40;		//後隙フレーム
+	const int UPPER_DAMAGE = 35;			//ダメージ量
+
 	const float ADD_ANGLE = 0.02f;			//角度に足す量
-	const float WALK_DISTANCE = 100.0f;
-	const float RUN_DISTANCE = 200.0f;
-	const float RADIUS = 20.0f;
-	const int MAX_STATE_TIMER = 120;
-	const int MAX_GUARD_TIMER = 300;
-	const float ATTACK_RADIUS = 20.0f;
-	const float ATTACK_RANGE = 35.0f;
-	const int MAX_HP = 100;
+	const float WALK_DISTANCE = 50.0f;		//歩きから攻撃に移行する距離
+	const float RUN_DISTANCE = 200.0f;		//走りから歩きに移行する距離
+	const float RADIUS = 20.0f;				//半径
+	const int MAX_STATE_TIMER = 120;		//状態を変更するタイマー
+	const int MAX_GUARD_TIMER = 300;		//ガード状態のタイマー
+	const float ATTACK_RADIUS = 20.0f;		//攻撃の半径
+	const float ATTACK_RANGE = 35.0f;		//攻撃の距離
+	const int MAX_HP = 100;					//最大HP
 
 	enum class STATE {
 		WAIT,
@@ -44,10 +51,10 @@ private:
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
-	Object3D object;
-	Object3D sphere;
+	Object3D object;			//モデル
+	Object3D sphere;			//球
 	Vec3 position;				//座標
-	float radius;
+	float radius;				//半径
 	float speed;				//速度
 	Vec3 forwardVec;			//正面ベクトル
 	Vec3 previousForwardVec;	//１フレーム前の正面ベクトル
@@ -61,7 +68,9 @@ private:
 	int random;					//乱数
 	STATE state;				//状態
 	int stateTimer;				//行動間隔
-	int HP;
+	int HP;						//HP
+	int damage;					//プレイヤーに与えるダメージ量
+	bool is1Hit;
 
 	//弱パンチ
 	bool isJab;
@@ -121,6 +130,9 @@ public:
 	//描画
 	void Draw();
 
+	//ダメージ(HPのセッタのようなもの)
+	void Damage(int damage);
+
 	//死亡処理
 	void Dead();
 
@@ -135,8 +147,11 @@ public:
 	Vec3 GetAttackPos() { return attackPos; }
 	float GetAttackRadius() { return ATTACK_RADIUS; }
 	bool GetIsHit() { return isHit; }
+	float GetDamage() { return damage; }
+	bool GetIs1Hit() { return is1Hit; }
 
 	//セッタ
 	void SetPos(const Vec3& pos) { position = pos; }
 	void SetSpeed(float speed) { this->speed = speed; }
+	void SetIs1Hit(bool flag) { is1Hit = flag; }
 };

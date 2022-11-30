@@ -197,6 +197,7 @@ void Enemy::Jab()
 		if (jabHitTimer < MAX_JAB_HIT_TIMER) {
 			jabHitTimer++;
 			isHit = true;
+			damage = JAB_DAMAGE;
 		}
 		else {
 			if (jabEndTimer < MAX_JAB_END_TIMER) {
@@ -210,6 +211,7 @@ void Enemy::Jab()
 				jabStartTmier = 0;
 				jabHitTimer = 0;
 				jabEndTimer = 0;
+				is1Hit = true;
 			}
 		}
 	}
@@ -226,6 +228,7 @@ void Enemy::Hook()
 		if (hookHitTimer < MAX_HOOK_HIT_TIMER) {
 			hookHitTimer++;
 			isHit = true;
+			damage = HOOK_DAMAGE;
 		}
 		else {
 			if (hookEndTimer < MAX_HOOK_END_TIMER) {
@@ -240,6 +243,7 @@ void Enemy::Hook()
 				hookStartTmier = 0;
 				hookHitTimer = 0;
 				hookEndTimer = 0;
+				is1Hit = true;
 			}
 		}
 	}
@@ -256,6 +260,7 @@ void Enemy::Upper()
 		if (upperHitTimer < MAX_HOOK_HIT_TIMER) {
 			upperHitTimer++;
 			isHit = true;
+			damage = UPPER_DAMAGE;
 		}
 		else {
 			if (upperEndTimer < MAX_HOOK_END_TIMER) {
@@ -267,6 +272,7 @@ void Enemy::Upper()
 				upperHitTimer = 0;
 				upperEndTimer = 0;
 				state = STATE::WAIT;
+				is1Hit = true;
 			}
 		}
 	}
@@ -306,4 +312,12 @@ void Enemy::Draw()
 void Enemy::Dead()
 {
 	isAlive = false;
+}
+
+void Enemy::Damage(int damage)
+{
+	HP -= damage;
+	if (HP <= 0) {
+		Dead();
+	}
 }

@@ -16,15 +16,22 @@ private:
 	const float MAX_SPEED = 5.0f;
 	const float SWAY_SPEED = 24.0f;
 	const float WALK_SPEED = 2.0f;
+
 	const int MAX_JAB_START_TIMER = 12;
 	const int MAX_JAB_HIT_TIMER = 6;
 	const int MAX_JAB_END_TIMER = 30;
+	const int JAB_DAMAGE = 20;				//ダメージ量
+
 	const int MAX_HOOK_START_TIMER = 8;
 	const int MAX_HOOK_HIT_TIMER = 6;
 	const int MAX_HOOK_END_TIMER = 30;
+	const int HOOK_DAMAGE = 30;				//ダメージ量
+
 	const int MAX_UPPER_START_TIMER = 12;
 	const int MAX_UPPER_HIT_TIMER = 6;
 	const int MAX_UPPER_END_TIMER = 40;
+	const int UPPER_DAMAGE = 50;				//ダメージ量
+
 	const float RADIUS = 40.0f;
 	const float ATTACK_RADIUS = 20.0f;
 	const float ATTACK_RANGE = 35.0f;
@@ -45,6 +52,8 @@ private:
 	bool isGuard;
 	bool isHit;					//攻撃判定があるときのみ上がるフラグ
 	int HP;
+	int damage;
+	bool is1Hit;
 
 	//ノックバック用
 	bool isKnockBack;
@@ -106,15 +115,25 @@ public:
 	//描画
 	void Draw();
 
+	//ダメージ(HPのセッタのようなもの)
+	void Damage(int damage);
+
+	//死亡処理
+	void Dead();
+
 	//ゲッタ
 	Vec3 GetPos() { return position; }
-	void SetPos(const Vec3& pos) { position = pos; }
 	float GetRadius() { return radius; }
 	bool GetIsAlive() { return isAlive; }
 	bool GetIsHit() { return isHit; }
 	Sphere GetBodySphere() { return bodySphere; }
 	Sphere GetAttackSphere() { return attackSphere; }
 	Vec3 GetAttackPos() { return attackPos; }
+	float GetDamage() { return damage; }
 	float GetAttackRadius() { return ATTACK_RADIUS; }
+	bool GetIs1Hit() { return is1Hit; }
+	//セッタ
+	void SetPos(const Vec3& pos) { position = pos; }
 	void SetIsKnockBack(bool flag) { isKnockBack = flag; }
+	void SetIs1Hit(bool flag) { is1Hit = flag; }
 };
