@@ -136,7 +136,7 @@ public:
 	void Generate(const Vec3& position, const Vec3& playerPos);
 
 	//更新
-	void Update(const Vec3& playerPos);
+	void Update(const Vec3& playerPos, const Vec3& attackVec);
 
 	//描画
 	void Draw();
@@ -163,7 +163,9 @@ public:
 	bool GetIs1Hit() { return is1Hit; }
 
 	//セッタ
-	void SetPos(const Vec3& pos) { position = pos; }
-	void SetSpeed(float speed) { this->speed = speed; }
-	void SetIs1Hit(bool flag) { is1Hit = flag; }
+	void SetPos(const Vec3& value) { position = value; }
+	void SetSpeed(float value) { this->speed = value; }
+	void SetIsKnockBack(bool value) { isKnockBack = value; }
+	void SetIs1Hit(bool value) { is1Hit = value; }
+	void SetkBackVel(float value) { kBackVel = value; }
 };

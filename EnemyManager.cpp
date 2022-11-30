@@ -71,6 +71,8 @@ void EnemyManager::Update(Player& player)
 				float TotalRadius = player.GetAttackRadius() + enemy[i].GetRadius();
 				//“–‚½‚Á‚Ä‚¢‚½ê‡
 				if (enemyToEnemyDistance < TotalRadius) {
+					enemy[i].SetIsKnockBack(true);
+					enemy[i].SetkBackVel(player.GetValueKBackVel());
 					player.SetIs1Hit(false);
 					enemy[i].Damage(player.GetDamage());
 				}
@@ -101,7 +103,7 @@ void EnemyManager::Update(Player& player)
 	}
 
 	for (int i = 0; i < enemy.size(); ++i) {
-		enemy[i].Update(player.GetPos());
+		enemy[i].Update(player.GetPos(), player.GetAttackVec());
 	}
 }
 

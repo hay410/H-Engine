@@ -224,6 +224,8 @@ void Player::Jab()
 			jabHitTimer++;
 			isHit = true;
 			damage = JAB_DAMAGE;
+			valueKBackVel = JAB_KNOCKBACK_POWER;
+			attackVec = forwardVec;
 		}
 		else {
 			if (jabEndTimer < MAX_JAB_END_TIMER) {
@@ -259,6 +261,8 @@ void Player::Hook()
 			hookHitTimer++;
 			isHit = true;
 			damage = HOOK_DAMAGE;
+			valueKBackVel = HOOK_KNOCKBACK_POWER;
+			attackVec = forwardVec;
 		}
 		else {
 			if (hookEndTimer < MAX_HOOK_END_TIMER) {
@@ -294,6 +298,8 @@ void Player::Upper()
 			upperHitTimer++;
 			isHit = true;
 			damage = UPPER_DAMAGE;
+			valueKBackVel = UPPER_KNOCKBACK_POWER;
+			attackVec = forwardVec;
 		}
 		else {
 			if (upperEndTimer < MAX_HOOK_END_TIMER) {

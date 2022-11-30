@@ -39,12 +39,16 @@ Enemy::Enemy()
 	stateTimer = 0;
 	guardTimer = 0;
 	HP = MAX_HP;
+
+	isKnockBack = false;
+	kBackVel = 0.0f;
 }
 
 void Enemy::Generate(const Vec3& position,const Vec3&playerPos)
 {
 	this->position = position;
 	angle = atan2(playerPos.x - position.x, playerPos.z - position.z);
+	HP = MAX_HP;
 	isAlive = true;
 }
 
@@ -238,7 +242,6 @@ void Enemy::Hook()
 
 				//çUåÇîhê∂ÇÃì¸óÕÇéÊÇÈ
 				isUpper = true;
-				
 			}
 			else {
 				isHook = false;
@@ -305,11 +308,12 @@ void Enemy::Init()
 	position = Vec3(0, 0, 0);
 }
 
-void Enemy::Update(const Vec3& playerPos)
+void Enemy::Update(const Vec3& playerPos, const Vec3& attackVec)
 {
 	if (!isAlive)return;
 	StateControl();
 	Move(playerPos);
+	KnockBack(attackVec);
 
 	forwardVec = Vec3(playerPos - position);
 	forwardVec.Normalize();

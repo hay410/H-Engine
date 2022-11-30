@@ -17,25 +17,28 @@ private:
 	const float SWAY_SPEED = 24.0f;
 	const float WALK_SPEED = 2.0f;
 
-	const int MAX_JAB_START_TIMER = 12;
-	const int MAX_JAB_HIT_TIMER = 6;
-	const int MAX_JAB_END_TIMER = 30;
-	const int JAB_DAMAGE = 20;				//ダメージ量
+	const int	MAX_JAB_START_TIMER = 12;
+	const int	MAX_JAB_HIT_TIMER = 6;
+	const int	MAX_JAB_END_TIMER = 30;
+	const int	JAB_DAMAGE = 20;				//ダメージ量
+	const float JAB_KNOCKBACK_POWER = 3.0f;		//ノックバックの強さ
 
-	const int MAX_HOOK_START_TIMER = 8;
-	const int MAX_HOOK_HIT_TIMER = 6;
-	const int MAX_HOOK_END_TIMER = 30;
-	const int HOOK_DAMAGE = 30;				//ダメージ量
+	const int	MAX_HOOK_START_TIMER = 8;
+	const int	MAX_HOOK_HIT_TIMER = 6;
+	const int	MAX_HOOK_END_TIMER = 30;
+	const int	HOOK_DAMAGE = 30;				//ダメージ量
+	const float HOOK_KNOCKBACK_POWER = 5.0f;	//ノックバックの強さ
 
-	const int MAX_UPPER_START_TIMER = 12;
-	const int MAX_UPPER_HIT_TIMER = 6;
-	const int MAX_UPPER_END_TIMER = 40;
-	const int UPPER_DAMAGE = 50;				//ダメージ量
+	const int	MAX_UPPER_START_TIMER = 12;
+	const int	MAX_UPPER_HIT_TIMER = 6;
+	const int	MAX_UPPER_END_TIMER = 40;
+	const int	UPPER_DAMAGE = 50;				//ダメージ量
+	const float UPPER_KNOCKBACK_POWER = 18.0f;	//ノックバックの強さ
 
 	const float RADIUS = 40.0f;
 	const float ATTACK_RADIUS = 20.0f;
 	const float ATTACK_RANGE = 35.0f;
-	const int MAX_HP = 300;
+	const int	MAX_HP = 300;
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
@@ -82,6 +85,7 @@ private:
 	Sphere bodySphere;
 	Sphere attackSphere;
 	Vec3 attackPos;
+	Vec3 attackVec;
 	
 	//メンバ関数
 	void Move();
@@ -133,6 +137,9 @@ public:
 	float GetDamage() { return damage; }
 	float GetAttackRadius() { return ATTACK_RADIUS; }
 	bool GetIs1Hit() { return is1Hit; }
+	Vec3 GetAttackVec() { return attackVec; }
+	float GetValueKBackVel() { return valueKBackVel; }
+
 	//セッタ
 	void SetPos(const Vec3& value) { position = value; }
 	void SetIsKnockBack(bool value) { isKnockBack = value; }
