@@ -99,6 +99,7 @@ void Enemy::StateControl()
 		switch (state)
 		{
 		case STATE::MOVE:
+			//break;を描かないことで1フレーム待たずに状態変更する
 			state = STATE::WAIT;
 		case STATE::WAIT:
 			stateTimer++;
@@ -368,8 +369,13 @@ void Enemy::Dead()
 	isAlive = false;
 }
 
-void Enemy::Damage(int damage)
+void Enemy::Damage(float damage)
 {
+	//実際に与えるダメージ
+	float actualDamage = damage;
+	if (isGuard) {
+		actualDamage *= (100 - REDUCTION_RATE) / 100;
+	}
 	HP -= damage;
 	if (HP <= 0) {
 		Dead();
