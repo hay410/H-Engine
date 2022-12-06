@@ -16,40 +16,43 @@ private:
 	const float MAX_SPEED = 1.0f;				//通常の移動速度
 	const float SWAY_SPEED = 18.0f;				//スウェイ時の速度
 	const float WALK_SPEED = 0.6f;				//歩きの速度
+	const float ADD_ANGLE = 0.02f;				//角度に足す量
+	const float WALK_DISTANCE = 50.0f;			//歩きから攻撃に移行する距離
+	const float RUN_DISTANCE = 200.0f;			//走りから歩きに移行する距離
+	const float RADIUS = 20.0f;					//半径
+	const int	MAX_STATE_TIMER = 60;			//状態を変更するタイマー
+	const int	MAX_GUARD_TIMER = 300;			//ガード状態のタイマー
+	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
+	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
+	const int	MAX_HP = 100;					//最大HP
 
+	//弱パンチ
 	const int	MAX_JAB_START_TIMER = 12;		//発生フレーム
 	const int	MAX_JAB_HIT_TIMER = 6;			//判定フレーム
 	const int	MAX_JAB_END_TIMER = 30;			//後隙フレーム
 	const int	JAB_DAMAGE = 15;				//ダメージ量
 	const float JAB_KNOCKBACK_POWER = 3.0f;		//ノックバックの強さ
 
+	//強パンチ
 	const int	MAX_HOOK_START_TIMER = 8;		//発生フレーム
 	const int	MAX_HOOK_HIT_TIMER = 6;			//判定フレーム
 	const int	MAX_HOOK_END_TIMER = 30;		//後隙フレーム
 	const int	HOOK_DAMAGE = 20;				//ダメージ量
 	const float HOOK_KNOCKBACK_POWER = 5.0f;	//ノックバックの強さ
 
+	//強強パンチ
 	const int	MAX_UPPER_START_TIMER = 12;		//発生フレーム
 	const int	MAX_UPPER_HIT_TIMER = 6;		//判定フレーム
 	const int	MAX_UPPER_END_TIMER = 40;		//後隙フレーム
 	const int	UPPER_DAMAGE = 35;				//ダメージ量
 	const float UPPER_KNOCKBACK_POWER = 18.0f;	//ノックバックの強さ
 
-	const float ADD_ANGLE = 0.02f;				//角度に足す量
-	const float WALK_DISTANCE = 50.0f;			//歩きから攻撃に移行する距離
-	const float RUN_DISTANCE = 200.0f;			//走りから歩きに移行する距離
-	const float RADIUS = 20.0f;					//半径
-	const int	MAX_STATE_TIMER = 120;			//状態を変更するタイマー
-	const int	MAX_GUARD_TIMER = 300;			//ガード状態のタイマー
-	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
-	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
-	const int	MAX_HP = 100;						//最大HP
-
 	enum class STATE {
 		WAIT,
 		ATTACK,
 		SWAY,
 		GUARD,
+		MOVE,
 	};
 
 	//メンバ変数
@@ -66,6 +69,7 @@ private:
 	bool isGuard;				//ガード中か
 	int guardTimer;				//ガード用のタイマー
 	bool isHit;					//攻撃判定があるときのみ上がるフラグ
+	bool isAttack;
 	bool isAlive;				//生存フラグ
 	bool availableAttack;		//攻撃可能
 	int random;					//乱数

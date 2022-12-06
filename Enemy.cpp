@@ -35,6 +35,7 @@ Enemy::Enemy()
 	upperEndTimer = 0;
 
 	availableAttack = false;
+	isAttack = false;
 	state = STATE::WAIT;
 	stateTimer = 0;
 	guardTimer = 0;
@@ -72,41 +73,37 @@ void Enemy::Move(const Vec3& playerPos)
 		}
 	}
 
-	//外積を使って左右判定をする
-	float crossBuff = HHelper::Cross2D(XMFLOAT2(playerPos.x - position.x, playerPos.z - position.z), XMFLOAT2(sinf(angle), cosf(angle)));
-	if (crossBuff > 0) {
-		angle += ADD_ANGLE;
-	}
-	else if (crossBuff < 0) {
-		angle -= ADD_ANGLE;
-	}
-	float storageAngle = angle;
-
-	Sway();
-
-	if(isSway) {
-		if (random == 0) {
-			angle += HHelper::H_PI_F / 2;
+	if (state == STATE::MOVE) {
+		//外積を使って左右判定をする
+		float crossBuff = HHelper::Cross2D(XMFLOAT2(playerPos.x - position.x, playerPos.z - position.z), XMFLOAT2(sinf(angle), cosf(angle)));
+		if (crossBuff > 0) {
+			angle += ADD_ANGLE;
 		}
-		else {
-			angle -= HHelper::H_PI_F / 2;
+		else if (crossBuff < 0) {
+			angle -= ADD_ANGLE;
 		}
+		float storageAngle = angle;
+
+		position += Vec3(sinf(angle), 0, cosf(angle)) * speed;
+
+		angle = storageAngle;
 	}
-
-	position += Vec3(sinf(angle), 0, cosf(angle)) * speed;
-
-	angle = storageAngle;
 }
 
 void Enemy::StateControl()
 {
+	
+	isHit = false;
+
 	if (availableAttack) {
 		switch (state)
 		{
+		case STATE::MOVE:
+			state = STATE::WAIT;
 		case STATE::WAIT:
 			stateTimer++;
 			if (stateTimer >= MAX_STATE_TIMER) {
-				int random = HHelper::GetRand(1, 6);
+				int random = HHelper::GetRand(1, 3);
 				//int random = 1;
 				switch (random)
 				{
@@ -128,7 +125,7 @@ void Enemy::StateControl()
 			break;
 		case STATE::ATTACK:
 			attackVec = forwardVec;
-			Attack();
+			isAttack = true;
 			break;
 		case STATE::SWAY:
 			//スウェイを行っていなければスウェイをさせる
@@ -147,6 +144,9 @@ void Enemy::StateControl()
 			break;
 		}
 	}
+	else {
+		state = STATE::MOVE;
+	}
 }
 
 //スウェイ(回避)
@@ -161,9 +161,18 @@ void Enemy::Sway()
 		if (speed <= MAX_SPEED) {
 			speed = MAX_SPEED;
 			isSway = false;
-			state = STATE::WAIT;
+			state = STATE::MOVE;
+		}
+
+		//左右
+		if (random == 0) {
+			angle += HHelper::H_PI_F / 2;
+		}
+		else {
+			angle -= HHelper::H_PI_F / 2;
 		}
 	}
+
 }
 
 void Enemy::Guard()
@@ -173,14 +182,14 @@ void Enemy::Guard()
 		if (guardTimer >= MAX_GUARD_TIMER) {
 			isGuard = false;
 			speed = MAX_SPEED;
-			state = STATE::WAIT;
+			state = STATE::MOVE;
 		}
 	}
 }
 
 void Enemy::Attack()
 {
-	isHit = false;
+	if (!isAttack)return;
 	Jab();
 	Hook();
 	Upper();
@@ -199,6 +208,14 @@ void Enemy::Jab()
 	}
 	else {
 		if (jabHitTimer < MAX_JAB_HIT_TIMER) {
+
+			if (speed > 0.0f) {
+				speed = JAB_KNOCKBACK_POWER;
+				Vec3 stepVec = forwardVec * speed;
+				position += stepVec;
+				speed -= 2.0f;
+			}
+
 			jabHitTimer++;
 			isHit = true;
 			damage = JAB_DAMAGE;
@@ -231,6 +248,14 @@ void Enemy::Hook()
 	}
 	else {
 		if (hookHitTimer < MAX_HOOK_HIT_TIMER) {
+
+			if (speed >= 0.0f) {
+				speed = HOOK_KNOCKBACK_POWER;
+				Vec3 stepVec = forwardVec * speed;
+				position += stepVec;
+				speed -= 2.0f;
+			}
+
 			hookHitTimer++;
 			isHit = true;
 			damage = HOOK_DAMAGE;
@@ -277,8 +302,9 @@ void Enemy::Upper()
 				upperStartTmier = 0;
 				upperHitTimer = 0;
 				upperEndTimer = 0;
-				state = STATE::WAIT;
+				state = STATE::MOVE;
 				is1Hit = true;
+				isAttack = false;
 			}
 		}
 	}
@@ -311,9 +337,11 @@ void Enemy::Init()
 void Enemy::Update(const Vec3& playerPos, const Vec3& attackVec)
 {
 	if (!isAlive)return;
-	StateControl();
 	Move(playerPos);
+	StateControl();
 	KnockBack(attackVec);
+	Attack();
+	Sway();
 
 	forwardVec = Vec3(playerPos - position);
 	forwardVec.Normalize();
