@@ -139,7 +139,6 @@ void Enemy::StateControl()
 			break;
 		case STATE::GUARD:
 			isGuard = true;
-			Guard();
 			break;
 		default:
 			break;
@@ -322,11 +321,10 @@ void Enemy::KnockBack(const Vec3& attackVec)
 		if (kBackVel <= 0.0f) {
 			isKnockBack = false;
 		}
-		position += kBackVec;
-	}
-	else
-	{
-		kBackVel = SWAY_SPEED;
+		if (!isGuard) {
+			position += kBackVec;
+			state = STATE::MOVE;
+		}
 	}
 }
 
@@ -343,6 +341,7 @@ void Enemy::Update(const Vec3& playerPos, const Vec3& attackVec)
 	KnockBack(attackVec);
 	Attack();
 	Sway();
+	Guard();
 
 	forwardVec = Vec3(playerPos - position);
 	forwardVec.Normalize();
