@@ -37,7 +37,7 @@ Player::Player()
 	kBackVel = 0.0f;
 	HP = MAX_HP;
 	stepSpeed = 0.0f;
-	stanTimer = 0;
+	stunTimer = 0;
 }
 
 void Player::Move()
@@ -105,6 +105,8 @@ void Player::Move()
 			angle = acos(angle);
 			
 			//上で得た角度から入力ベクトルをy軸回転させる
+			if (cameraForwardVec.z < 0)angle *= -1;
+
 			forwardVec.x = inputVec.x * sinf(angle) + inputVec.z * cosf(angle);
 			forwardVec.z = -inputVec.x * cosf(angle) + inputVec.z * sinf(angle);
 			forwardVec.Normalize();
@@ -352,15 +354,15 @@ void Player::KnockBack(const Vec3& attackVec)
 		Vec3 kBackVec = attackVec * kBackVel;
 		//速度を徐々に減らす
 		kBackVel -= 2.0f;
-		stanTimer++;
+		stunTimer++;
 
 		if (kBackVel <= 0.0f) {
 			kBackVel = 0.0f;
 		}
 
-		if (stanTimer > MAX_STAN_TIMER) {
+		if (stunTimer > MAX_STUN_TIMER) {
 			isKnockBack = false;
-			stanTimer = 0;
+			stunTimer = 0;
 		}
 
 		position += kBackVec;
