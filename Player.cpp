@@ -32,29 +32,31 @@ Player::Player()
 	upperStartTmier = 0;
 	upperHitTimer = 0;
 	upperEndTimer = 0;
-
+		
 	isKnockBack = false;
 	kBackVel = 0.0f;
 	HP = MAX_HP;
 	stepSpeed = 0.0f;
+	stanTimer = 0;
 }
 
 void Player::Move()
 {
 	float angle;
 	//コントローラー入力
-	XMFLOAT2 leftStick = {};
-	leftStick.x = Input::Instance()->isPadThumb(XINPUT_THUMB_LEFTSIDE);
-	if (fabs(leftStick.x) <= 0.1f) { leftStick.x = 0; }
-	leftStick.y = Input::Instance()->isPadThumb(XINPUT_THUMB_LEFTVERT);
-	if (fabs(leftStick.y) <= 0.1f) { leftStick.y = 0; }
-	
-	//キーボード入力
-	if (Input::Instance()->isKey(DIK_W)) { leftStick.y = 1.0f; }
-	if (Input::Instance()->isKey(DIK_S)) { leftStick.y = -1.0f; }
-	if (Input::Instance()->isKey(DIK_A)) { leftStick.x = -1.0f; }
-	if (Input::Instance()->isKey(DIK_D)) { leftStick.x = 1.0f; }
+	XMFLOAT2 leftStick = { 0.0f,0.0f };
+	if (!isKnockBack) {
+		leftStick.x = Input::Instance()->isPadThumb(XINPUT_THUMB_LEFTSIDE);
+		if (fabs(leftStick.x) <= 0.1f) { leftStick.x = 0; }
+		leftStick.y = Input::Instance()->isPadThumb(XINPUT_THUMB_LEFTVERT);
+		if (fabs(leftStick.y) <= 0.1f) { leftStick.y = 0; }
 
+		//キーボード入力
+		if (Input::Instance()->isKey(DIK_W)) { leftStick.y = 1.0f; }
+		if (Input::Instance()->isKey(DIK_S)) { leftStick.y = -1.0f; }
+		if (Input::Instance()->isKey(DIK_A)) { leftStick.x = -1.0f; }
+		if (Input::Instance()->isKey(DIK_D)) { leftStick.x = 1.0f; }
+	}
 	
 	{
 		//カメラの正面ベクトル、右ベクトル、入力情報から自機の移動をさせる
@@ -141,13 +143,6 @@ void Player::Walk()
 	if (!isLockOn && !isSway) {
 		speed = MAX_SPEED;
 	}
-	////ロックオン状態に移行したときスピードを変更(１回のみ)
-	//if (Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_RIGHT_SHOULDER) || Input::Instance()->isKeyTrigger(DIK_LSHIFT)) { speed = WALK_SPEED; }
-	////ロックオンをやめたときは移動速度を戻す
-	//if (Input::Instance()->isPadRelease(XINPUT_GAMEPAD_RIGHT_SHOULDER) || Input::Instance()->isKeyRelease(DIK_LSHIFT)) { speed = MAX_SPEED; }
-
-	//forwardVec = previousForwardVec;
-
 }
 
 //スウェイ(回避)
@@ -156,7 +151,8 @@ void Player::Sway()
 	//入力情報を得ておく
 	bool input = false;
 	if (Input::Instance()->isKeyTrigger(DIK_TAB) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_A)) {
-		input = true;
+		if (!isKnockBack)
+			input = true;
 	}
 
 	//キーが押されていてかつスウェイを行っていなければスウェイをさせる
@@ -191,8 +187,10 @@ void Player::Guard()
 {
 	isGuard = false;
 	if (Input::Instance()->isKey(DIK_E) || Input::Instance()->isPad(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-		isGuard = true;
-		speed = 0;
+		if (!isKnockBack) {
+			isGuard = true;
+			speed = 0;
+		}
 	}
 	//ロックオンをやめたときは移動速度を戻す
 	if (Input::Instance()->isPadRelease(XINPUT_GAMEPAD_LEFT_SHOULDER) || Input::Instance()->isKeyRelease(DIK_E)) { speed = MAX_SPEED; }
@@ -210,7 +208,8 @@ void Player::Jab()
 {
 	if (!isHook && !isUpper) {
 		if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-			isJab = true;
+			if (!isKnockBack)
+				isJab = true;
 		}
 	}
 
@@ -353,10 +352,17 @@ void Player::KnockBack(const Vec3& attackVec)
 		Vec3 kBackVec = attackVec * kBackVel;
 		//速度を徐々に減らす
 		kBackVel -= 2.0f;
+		stanTimer++;
 
 		if (kBackVel <= 0.0f) {
-			isKnockBack = false;
+			kBackVel = 0.0f;
 		}
+
+		if (stanTimer > MAX_STAN_TIMER) {
+			isKnockBack = false;
+			stanTimer = 0;
+		}
+
 		position += kBackVec;
 	}
 	//else
