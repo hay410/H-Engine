@@ -42,7 +42,7 @@ private:
 	const float ATTACK_RADIUS = 20.0f;
 	const float ATTACK_RANGE = 35.0f;
 	const int	MAX_HP = 300;
-	const int	MAX_STAN_TIMER = 60;
+	const int	MAX_STUN_TIMER = 60;
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
@@ -67,7 +67,7 @@ private:
 	bool isKnockBack;
 	float kBackVel;			//自分のノックバックに使う加速度
 	float valueKBackVel;	//敵をノックバックさせるために敵に渡す加速度
-	int stanTimer;
+	int stunTimer;
 
 	//弱パンチ
 	bool isJab;
