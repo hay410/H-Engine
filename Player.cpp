@@ -36,6 +36,7 @@ Player::Player()
 	isKnockBack = false;
 	kBackVel = 0.0f;
 	HP = MAX_HP;
+	stepSpeed = 0.0f;
 }
 
 void Player::Move()
@@ -221,6 +222,14 @@ void Player::Jab()
 	else {
 		speed = 0.0f;
 		if (jabHitTimer < MAX_JAB_HIT_TIMER) {
+
+			if (stepSpeed >= 0.0f) {
+				stepSpeed = JAB_STEP_RANGE;
+				Vec3 stepVec = forwardVec * stepSpeed;
+				position += stepVec;
+				stepSpeed -= 2.0f;
+			}
+
 			jabHitTimer++;
 			isHit = true;
 			damage = JAB_DAMAGE;
@@ -234,6 +243,7 @@ void Player::Jab()
 				//UŒ‚”h¶‚Ì“ü—Í‚ðŽæ‚é
 				if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
 					isHook = true;
+					stepSpeed = 0.0f;
 				}
 			}
 			else {
@@ -243,6 +253,7 @@ void Player::Jab()
 				jabEndTimer = 0;
 				speed = MAX_SPEED;
 				is1Hit = true;
+				stepSpeed = 0.0f;
 			}
 		}
 	}
@@ -258,6 +269,13 @@ void Player::Hook()
 	else {
 		speed = 0.0f;
 		if (hookHitTimer < MAX_HOOK_HIT_TIMER) {
+			if (stepSpeed >= 0.0f) {
+				stepSpeed = HOOK_STEP_RANGE;
+				Vec3 stepVec = forwardVec * stepSpeed;
+				position += stepVec;
+				stepSpeed -= 2.0f;
+			}
+
 			hookHitTimer++;
 			isHit = true;
 			damage = HOOK_DAMAGE;
@@ -271,6 +289,7 @@ void Player::Hook()
 				//UŒ‚”h¶‚Ì“ü—Í‚ðŽæ‚é
 				if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
 					isUpper = true;
+					stepSpeed = 0.0f;
 				}
 			}
 			else {
@@ -280,6 +299,7 @@ void Player::Hook()
 				hookEndTimer = 0;
 				speed = MAX_SPEED;
 				is1Hit = true;
+				stepSpeed = 0.0f;
 			}
 		}
 	}
@@ -295,6 +315,13 @@ void Player::Upper()
 	else {
 		speed = 0.0f;
 		if (upperHitTimer < MAX_HOOK_HIT_TIMER) {
+			if (stepSpeed >= 0.0f) {
+				stepSpeed = UPPER_STEP_RANGE;
+				Vec3 stepVec = forwardVec * stepSpeed;
+				position += stepVec;
+				stepSpeed -= 2.0f;
+			}
+
 			upperHitTimer++;
 			isHit = true;
 			damage = UPPER_DAMAGE;
@@ -312,6 +339,7 @@ void Player::Upper()
 				upperEndTimer = 0;
 				speed = MAX_SPEED;
 				is1Hit = true;
+				stepSpeed = 0.0f;
 			}
 		}
 

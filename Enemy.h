@@ -33,6 +33,7 @@ private:
 	const int	MAX_JAB_END_TIMER = 30;			//後隙フレーム
 	const int	JAB_DAMAGE = 15;				//ダメージ量
 	const float JAB_KNOCKBACK_POWER = 3.0f;		//ノックバックの強さ
+	const float JAB_STEP_RANGE = 3.0f;			//ステップの距離
 
 	//強パンチ
 	const int	MAX_HOOK_START_TIMER = 8;		//発生フレーム
@@ -40,6 +41,7 @@ private:
 	const int	MAX_HOOK_END_TIMER = 30;		//後隙フレーム
 	const int	HOOK_DAMAGE = 20;				//ダメージ量
 	const float HOOK_KNOCKBACK_POWER = 5.0f;	//ノックバックの強さ
+	const float HOOK_STEP_RANGE = 6.0f;			//ステップの距離
 
 	//強強パンチ
 	const int	MAX_UPPER_START_TIMER = 12;		//発生フレーム
@@ -47,6 +49,7 @@ private:
 	const int	MAX_UPPER_END_TIMER = 40;		//後隙フレーム
 	const int	UPPER_DAMAGE = 35;				//ダメージ量
 	const float UPPER_KNOCKBACK_POWER = 18.0f;	//ノックバックの強さ
+	const float UPPER_STEP_RANGE = 9.0f;			//ステップの距離
 
 	enum class STATE {
 		WAIT,

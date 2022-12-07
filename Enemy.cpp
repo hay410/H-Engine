@@ -209,8 +209,8 @@ void Enemy::Jab()
 	else {
 		if (jabHitTimer < MAX_JAB_HIT_TIMER) {
 
-			if (speed > 0.0f) {
-				speed = JAB_KNOCKBACK_POWER;
+			if (speed >= 0.0f) {
+				speed = JAB_STEP_RANGE;
 				Vec3 stepVec = forwardVec * speed;
 				position += stepVec;
 				speed -= 2.0f;
@@ -227,6 +227,7 @@ void Enemy::Jab()
 
 				//çUåÇîhê∂
 				isHook = true;
+				speed = 0.0f;
 			}
 			else {
 				isJab = false;
@@ -250,7 +251,7 @@ void Enemy::Hook()
 		if (hookHitTimer < MAX_HOOK_HIT_TIMER) {
 
 			if (speed >= 0.0f) {
-				speed = HOOK_KNOCKBACK_POWER;
+				speed = HOOK_STEP_RANGE;
 				Vec3 stepVec = forwardVec * speed;
 				position += stepVec;
 				speed -= 2.0f;
@@ -267,6 +268,7 @@ void Enemy::Hook()
 
 				//çUåÇîhê∂ÇÃì¸óÕÇéÊÇÈ
 				isUpper = true;
+				speed = 0.0f;
 			}
 			else {
 				isHook = false;
@@ -288,6 +290,14 @@ void Enemy::Upper()
 	}
 	else {
 		if (upperHitTimer < MAX_HOOK_HIT_TIMER) {
+
+			if (speed >= 0.0f) {
+				speed = UPPER_STEP_RANGE;
+				Vec3 stepVec = forwardVec * speed;
+				position += stepVec;
+				speed -= 2.0f;
+			}
+
 			upperHitTimer++;
 			isHit = true;
 			damage = UPPER_DAMAGE;

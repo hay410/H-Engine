@@ -22,18 +22,21 @@ private:
 	const int	MAX_JAB_END_TIMER = 30;
 	const int	JAB_DAMAGE = 20;				//ダメージ量
 	const float JAB_KNOCKBACK_POWER = 3.0f;		//ノックバックの強さ
+	const float JAB_STEP_RANGE = 3.0f;
 
 	const int	MAX_HOOK_START_TIMER = 8;
 	const int	MAX_HOOK_HIT_TIMER = 6;
 	const int	MAX_HOOK_END_TIMER = 30;
 	const int	HOOK_DAMAGE = 30;				//ダメージ量
 	const float HOOK_KNOCKBACK_POWER = 5.0f;	//ノックバックの強さ
+	const float HOOK_STEP_RANGE = 6.0f;
 
 	const int	MAX_UPPER_START_TIMER = 12;
 	const int	MAX_UPPER_HIT_TIMER = 6;
 	const int	MAX_UPPER_END_TIMER = 40;
 	const int	UPPER_DAMAGE = 50;				//ダメージ量
 	const float UPPER_KNOCKBACK_POWER = 18.0f;	//ノックバックの強さ
+	const float UPPER_STEP_RANGE = 9.0f;
 
 	const float RADIUS = 40.0f;
 	const float ATTACK_RADIUS = 20.0f;
@@ -57,6 +60,7 @@ private:
 	int HP;
 	int damage;
 	bool is1Hit;
+	float stepSpeed;
 
 	//ノックバック用
 	bool isKnockBack;
