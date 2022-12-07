@@ -404,6 +404,7 @@ void Player::Draw()
 void Player::Damage(int damage)
 {
 	HP -= damage;
+	stunTimer = 0;
 	if (HP <= 0) {
 		Dead();
 	}
