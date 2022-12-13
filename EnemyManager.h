@@ -8,6 +8,9 @@ private:
 	//ƒƒ“ƒo’è”
 	int MAX_VALUE = 1;
 	Vec3 attackVec = Vec3();
+	Vec3 playerNearPos = Vec3();
+	float ComparingDistance = 100000.0f;
+
 	//ƒƒ“ƒo•Ï”
 	vector<Enemy> enemy;
 public:
@@ -25,4 +28,5 @@ public:
 
 	Enemy GetEnemy(int i) { return enemy[i]; }
 	Vec3 GetAttackVec() { return attackVec; }
+	Vec3 GetNearPos() { return playerNearPos; }
 };

@@ -36,7 +36,7 @@ void GameScene::Update()
 
 	Collition();
 
-	player.Update(EnemyManager::Instance()->GetAttackVec());
+	player.Update(EnemyManager::Instance()->GetAttackVec(), EnemyManager::Instance()->GetNearPos());
 	EnemyManager::Instance()->Update(player);
 	EnemyManager::Instance()->CD_PushBackPlayer(player);
 }

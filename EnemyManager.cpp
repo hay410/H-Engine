@@ -10,8 +10,17 @@ EnemyManager::EnemyManager()
 void EnemyManager::Generate(Player& player)
 {
 	for (int i = 0; i < enemy.size(); ++i) {
-		Vec3 generatePos = HHelper::GetRandXMFLOAT3(-300, 300);
+		Vec3 generatePos = HHelper::GetRandXMFLOAT3(-100, 100);
 		generatePos.y = -50;
+		if (i >= 0 && i < 3) {
+			generatePos.x -= 300;
+		}
+		else if (i >= 3 && i < 6) {
+			generatePos.x += 100;
+		}
+		else if (i >= 6 && i < MAX_VALUE) {
+			generatePos.x += 700;
+		}
 		enemy[i].Generate(generatePos, player.GetPos());
 	}
 }
@@ -116,6 +125,11 @@ void EnemyManager::CD_PushBackPlayer(Player& player)
 		//敵とプレイヤーの2点間の距離を求める
 		Vec3 directionVec = Vec3(enemy[i].GetPos() -player.GetPos());
 		float enemyToPlayerDistance = directionVec.Length();
+
+		if (enemyToPlayerDistance < ComparingDistance) {
+			ComparingDistance = enemyToPlayerDistance;
+			playerNearPos = enemy[i].GetPos();
+		}
 
 		//ある一定の距離離れていたら判定を行わない
 		const float CertainDistance = 200.0f;

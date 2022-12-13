@@ -75,8 +75,8 @@ void Player::Move()
 		position += rightVec * amountX;
 		position += cameraForwardVec * amountZ;
 
-		if (position.x >= 1000) {
-			position.x = 999.99f;
+		if (position.x >= 2500) {
+			position.x = 2499.99f;
 		}
 		if (position.x <= -1000) {
 			position.x = -999.99f;
@@ -138,7 +138,17 @@ void Player::Walk()
 	//ロックオン中は移動速度を遅くする
 	isLockOn = false;
 	//ボタンかキーを押してる間はロックオン状態とする
-	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)|| Input::Instance()->isKey(DIK_LSHIFT)) { isLockOn = true; }
+	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)|| Input::Instance()->isKey(DIK_LSHIFT)) {
+		isLockOn = true;
+
+		//Vec3 directtionVec = Vec3(enemyNearPos - position);
+		//float distance = directtionVec.Length();
+
+		//if (distance <= LOCKON_RANGE) {
+		//	directtionVec.Normalize();
+		//	forwardVec = directtionVec;
+		//}
+	}
 	if (isLockOn && !isSway) {
 		speed = WALK_SPEED;
 	}
@@ -378,8 +388,9 @@ void Player::Init()
 	position = Vec3(-1000, -50, 0);
 }
 
-void Player::Update(const Vec3& attackVec)
-{
+void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
+{	
+	this->enemyNearPos = enemyNearPos;
 	bodySphere.center = position.ConvertXMVECTOR();
 	object.ChangePosition(position.ConvertXMFLOAT3());
 	attackPos = position + forwardVec * ATTACK_RANGE;

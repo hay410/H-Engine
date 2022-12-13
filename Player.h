@@ -16,6 +16,12 @@ private:
 	const float MAX_SPEED = 5.0f;				//通常のスピード
 	const float SWAY_SPEED = 24.0f;				//スウェイのスピード
 	const float WALK_SPEED = 2.0f;				//歩きのスピード
+	const float RADIUS = 40.0f;					//半径
+	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
+	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
+	const int	MAX_HP = 300;					//最大HP
+	const int	MAX_STUN_TIMER = 60;			//スタンの時間
+	const float LOCKON_RANGE = 500.0f;			//ロックオンの距離
 
 	const int	MAX_JAB_START_TIMER = 12;		//発生フレーム
 	const int	MAX_JAB_HIT_TIMER = 6;			//判定フレーム
@@ -38,11 +44,6 @@ private:
 	const float UPPER_KNOCKBACK_POWER = 18.0f;	//ノックバックの強さ
 	const float UPPER_STEP_RANGE = 9.0f;		//ステップの距離
 
-	const float RADIUS = 40.0f;					//半径
-	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
-	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
-	const int	MAX_HP = 300;					//最大HP
-	const int	MAX_STUN_TIMER = 60;			//スタンの時間
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
@@ -56,6 +57,7 @@ private:
 	bool isAlive;				//生存フラグ
 	bool isSway;				//スウェイフラグ
 	bool isLockOn;				//ロックオンフラグ
+	Vec3 enemyNearPos;			//一番近い敵の座標
 	bool isGuard;				//ガードフラグ
 	bool isHit;					//攻撃判定があるときのみ上がるフラグ
 	int HP;						//ヒットポイント
@@ -130,7 +132,7 @@ public:
 	void Init();
 	
 	//更新
-	void Update(const Vec3& attackVec);
+	void Update(const Vec3& attackVec, const Vec3& enemyNearPos);
 	
 	//描画
 	void Draw();
