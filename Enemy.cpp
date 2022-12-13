@@ -59,17 +59,21 @@ void Enemy::Move(const Vec3& playerPos)
 	if (!isSway) {
 		Vec3 pVec = position - playerPos;
 		float pLength = pVec.Length();
-		if (pLength >= WALK_DISTANCE && pLength <= RUN_DISTANCE) {
+		if (pLength >= WALK_DISTANCE && pLength < RUN_DISTANCE) {
 			speed = WALK_SPEED;
 			availableAttack = false;
 		}
-		else if (pLength >= RUN_DISTANCE) {
+		else if (pLength >= RUN_DISTANCE && pLength < SENSE_DISTANCE) {
 			speed = MAX_SPEED;
 			availableAttack = false;
 		}
 		else if (pLength <= WALK_DISTANCE) {
 			speed = 0.0f;
 			availableAttack = true;
+		}
+		else if (pLength >= SENSE_DISTANCE) {
+			speed = 0.0f;
+			availableAttack = false;
 		}
 	}
 

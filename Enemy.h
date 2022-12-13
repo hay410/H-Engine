@@ -19,12 +19,13 @@ private:
 	const float ADD_ANGLE = 0.02f;				//角度に足す量
 	const float WALK_DISTANCE = 50.0f;			//歩きから攻撃に移行する距離
 	const float RUN_DISTANCE = 200.0f;			//走りから歩きに移行する距離
+	const float SENSE_DISTANCE = 500.0f;		//プレイヤーを感知する距離
 	const float RADIUS = 20.0f;					//半径
 	const int	MAX_STATE_TIMER = 60;			//状態を変更するタイマー
 	const int	MAX_GUARD_TIMER = 300;			//ガード状態のタイマー
 	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
 	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
-	const float	MAX_HP = 100.0f;					//最大HP
+	const float	MAX_HP = 100.0f;				//最大HP
 	const float	REDUCTION_RATE = 90.0f;			//ガードがダメージを軽減する割合(%)
 
 	//弱パンチ
