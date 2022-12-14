@@ -11,7 +11,7 @@ void EnemyManager::Generate(Player& player)
 {
 	for (int i = 0; i < enemy.size(); ++i) {
 		Vec3 generatePos = HHelper::GetRandXMFLOAT3(-100, 100);
-		generatePos.y = -50;
+		generatePos.y = -20;
 		if (i >= 0 && i < 3) {
 			generatePos.x -= 300;
 		}

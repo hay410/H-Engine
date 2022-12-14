@@ -3,10 +3,10 @@
 
 Player::Player()
 {
-	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Knight", L"Resources/Object/Knight/color.png");
+	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Body", L"Resources/Object/Body/Body.png");
 	sphere.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_NOLIGHT_ALPHA, "Ball", L"Resources/white1x1.png");
 	position = XMFLOAT3( 0, 0, 0);
-	object.ChangeScale({ 20,20,20 });
+	object.ChangeScale({ 1.5,1.5,1.5 });
 	sphere.ChangeScale({ 10,10,10 });
 	forwardVec = Vec3(0, 0, 1);
 	radius = 20.0f;
@@ -385,7 +385,7 @@ void Player::KnockBack(const Vec3& attackVec)
 
 void Player::Init()
 {
-	position = Vec3(-1000, -50, 0);
+	position = Vec3(-1000, -20, 0);
 }
 
 void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
@@ -394,7 +394,7 @@ void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
 	bodySphere.center = position.ConvertXMVECTOR();
 	object.ChangePosition(position.ConvertXMFLOAT3());
 	attackPos = position + forwardVec * ATTACK_RANGE;
-	attackPos.y += 30;
+	attackPos.y += 10;
 	attackSphere.center = attackPos.ConvertXMVECTOR();
 	sphere.ChangePosition(attackPos.ConvertXMFLOAT3());
 	Move();

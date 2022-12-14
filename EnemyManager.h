@@ -6,7 +6,7 @@ class EnemyManager :public Singleton<EnemyManager>
 {
 private:
 	//ƒƒ“ƒo’è”
-	int MAX_VALUE = 1;
+	int MAX_VALUE = 10;
 	Vec3 attackVec = Vec3();
 	Vec3 playerNearPos = Vec3();
 	float ComparingDistance = 100000.0f;

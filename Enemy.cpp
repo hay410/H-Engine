@@ -3,10 +3,10 @@
 
 Enemy::Enemy()
 {
-	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "King", L"Resources/Object/King/color.png");
+	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Enemy", L"Resources/white1x1.png");
 	sphere.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_NOLIGHT_ALPHA, "Ball", L"Resources/white1x1.png");
 	position = XMFLOAT3(0, 0, 0);
-	object.ChangeScale({ 20,20,20 });
+	object.ChangeScale({ 1.5,1.5,1.5 });
 	sphere.ChangeScale({ 10,10,10 });
 	forwardVec = Vec3(0, 0, 1);
 	//angle = 0;
@@ -362,7 +362,7 @@ void Enemy::Update(const Vec3& playerPos, const Vec3& attackVec)
 
 	XMFLOAT3 pos = position.ConvertXMFLOAT3();
 	attackPos = position + this->attackVec * ATTACK_RANGE;
-	attackPos.y += 30;
+	attackPos.y += 10;
 	bodySphere.center = XMLoadFloat3(&pos);
 	object.ChangePosition(pos);
 	sphere.ChangePosition(attackPos.ConvertXMFLOAT3());

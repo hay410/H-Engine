@@ -13,9 +13,9 @@ class Player
 {
 private:
 	//メンバ定数
-	const float MAX_SPEED = 5.0f;				//通常のスピード
+	const float MAX_SPEED = 4.0f;				//通常のスピード
 	const float SWAY_SPEED = 24.0f;				//スウェイのスピード
-	const float WALK_SPEED = 2.0f;				//歩きのスピード
+	const float WALK_SPEED = 2.5f;				//歩きのスピード
 	const float RADIUS = 40.0f;					//半径
 	const float ATTACK_RADIUS = 20.0f;			//攻撃の半径
 	const float ATTACK_RANGE = 35.0f;			//攻撃の距離
@@ -27,21 +27,21 @@ private:
 	const int	MAX_JAB_HIT_TIMER = 6;			//判定フレーム
 	const int	MAX_JAB_END_TIMER = 30;			//後隙フレーム
 	const int	JAB_DAMAGE = 20;				//ダメージ量
-	const float JAB_KNOCKBACK_POWER = 3.0f;		//ノックバックの強さ
+	const float JAB_KNOCKBACK_POWER = 4.0f;		//ノックバックの強さ
 	const float JAB_STEP_RANGE = 3.0f;			//ステップの距離
 
 	const int	MAX_HOOK_START_TIMER = 8;		//発生フレーム
 	const int	MAX_HOOK_HIT_TIMER = 6;			//判定フレーム
 	const int	MAX_HOOK_END_TIMER = 30;		//後隙フレーム
 	const int	HOOK_DAMAGE = 30;				//ダメージ量
-	const float HOOK_KNOCKBACK_POWER = 5.0f;	//ノックバックの強さ
+	const float HOOK_KNOCKBACK_POWER = 6.0f;	//ノックバックの強さ
 	const float HOOK_STEP_RANGE = 6.0f;			//ステップの距離
 
 	const int	MAX_UPPER_START_TIMER = 12;		//発生フレーム
 	const int	MAX_UPPER_HIT_TIMER = 6;			//判定フレーム
 	const int	MAX_UPPER_END_TIMER = 40;		//後隙フレーム
 	const int	UPPER_DAMAGE = 50;				//ダメージ量
-	const float UPPER_KNOCKBACK_POWER = 18.0f;	//ノックバックの強さ
+	const float UPPER_KNOCKBACK_POWER = 24.0f;	//ノックバックの強さ
 	const float UPPER_STEP_RANGE = 9.0f;		//ステップの距離
 
 
