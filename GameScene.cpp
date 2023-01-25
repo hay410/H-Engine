@@ -8,14 +8,29 @@ GameScene::GameScene()
 
 	player.Init();
 
-	kariStage.Generate({ 0,-50,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "stage", L"Resources/Object/stage/color.png");
+	kariStage.Generate({ 0,-50,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "stage", L"Resources/Object/stage/color.png");
+	//kariStage.Generate({ 0,-50,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "stage", L"Resources/Object/stage/color.png");
 	kariStage.ChangeScale(15, 15, 15);
 
-	lightpos = { 50,50,50 };
+	//for (int i = 0; i < LIGHT_AMOUNT; i++) {
+	//	Vec3 pos = Vec3(0, 300, 0);
+	//	if (i < LIGHT_AMOUNT / 2) {
+	//		pos.x = -1000 + 400 * i;
+	//		pos.z = -350;
+	//	}
+	//	else {
+	//		pos.x = -1000 + 400 * (i - LIGHT_AMOUNT / 2) + 200.0f;
+	//		pos.z = 350;
+	//	}
+	//	lightpos.push_back(pos);
 
-	LightManager::GeneratePointlight(lightpos, { 1,1,1 }, { 0.0001,0.0001,0.0001 });
+	//	LightManager::GeneratePointlight(lightpos[i].ConvertXMFLOAT3(), { 1,1,1 }, { 0.001,0.001,0.001 });
+	//}
 
 	EnemyManager::Instance()->Generate(player);
+
+	isEnd = false;
+	enemyCount = 0;
 }
 
 void GameScene::Collition()
@@ -35,6 +50,16 @@ void GameScene::Update()
 	}
 
 	Collition();
+
+	for (int i = 0; i < EnemyManager::Instance()->GetEnemyValue(); i++) {
+		if (!EnemyManager::Instance()->GetEnemy(i).GetIsAlive()) {
+			enemyCount++;
+		}
+	}
+	if (enemyCount == EnemyManager::Instance()->GetEnemyValue()) {
+		isEnd = true;
+	}
+	enemyCount = 0;
 
 	player.Update(EnemyManager::Instance()->GetAttackVec(), EnemyManager::Instance()->GetNearPos());
 	EnemyManager::Instance()->Update(player);

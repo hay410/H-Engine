@@ -11,7 +11,7 @@ class GameScene :public Singleton<GameScene>
 {
 private:
 	/*---- メンバ定数 ----*/
-
+	const int LIGHT_AMOUNT = 20;
 
 	/*---- メンバ変数 ----*/
 
@@ -19,7 +19,9 @@ private:
 	//Enemy enemy;
 	Object3D skydome;
 	Object3D kariStage;
-	XMFLOAT3 lightpos;
+	vector<Vec3> lightpos;
+	bool isEnd;
+	int enemyCount;
 
 	/*---- メンバ関数 ----*/
 	//コンストラクタ
@@ -39,4 +41,7 @@ public:
 
 	//描画
 	void Draw();
+
+	//ゲッタ
+	bool GetIsEnd() { return isEnd; }
 };
