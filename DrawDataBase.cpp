@@ -127,8 +127,6 @@ void DrawDataBase::MapConstDataB0(ComPtr<ID3D12Resource> constBuffB0, const Cons
 	Vec3 target;
 	Vec3 up;
 
-	XMMATRIX matViewProjShadowMap;
-
 
 	matProjection = Camera::Instance()->matProjection;
 	matPerspective = Camera::Instance()->matPerspective;

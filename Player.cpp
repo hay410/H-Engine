@@ -3,8 +3,10 @@
 
 Player::Player()
 {
-	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Body", L"Resources/Object/Body/Body.png");
+	//object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "Body", L"Resources/Object/Body/Body.png");
+	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "Body", L"Resources/Object/Body/Body.png");
 	sphere.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_NOLIGHT_ALPHA, "Ball", L"Resources/white1x1.png");
+
 	position = XMFLOAT3( 0, 0, 0);
 	object.ChangeScale({ 1.5,1.5,1.5 });
 	sphere.ChangeScale({ 10,10,10 });
@@ -385,7 +387,7 @@ void Player::KnockBack(const Vec3& attackVec)
 
 void Player::Init()
 {
-	position = Vec3(-1000, -20, 0);
+	position = Vec3(-900, -20, 0);
 }
 
 void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)

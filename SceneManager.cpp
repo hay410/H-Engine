@@ -5,7 +5,7 @@
 
 SceneManager::SceneManager()
 {
-	sceneNum = GAME_SCENE;
+	sceneNum = TITLE_SCENE;
 	isDebug = true;
 
 	DxBase.Init();
@@ -18,6 +18,9 @@ SceneManager::SceneManager()
 
 	DescriptorHeapManager::Instance()->GenerateDescriptorHeap();
 	PipelineManager::Instance()->Init();
+	TitleScene::Instance()->Init();
+	GameScene::Instance()->Init();
+	EndScene::Instance()->Init();
 }
 
 void SceneManager::Init()
@@ -27,7 +30,8 @@ void SceneManager::Init()
 void SceneManager::Update()
 {
 	Camera::Instance()->GenerateMatView();
-	//Camera::Instance()->Update();
+	Camera::Instance()->SetSceneNum(sceneNum);
+
 	switch (sceneNum) {
 	case TITLE_SCENE:
 		//タイトル画面での更新処理
@@ -36,10 +40,16 @@ void SceneManager::Update()
 	case GAME_SCENE:
 		//ゲームプレイ中での更新処理
 		GameScene::Instance()->Update();
+		if (GameScene::Instance()->GetIsEnd()) {
+			sceneNum = END_SCENE;
+		}
 		break;
 	case END_SCENE:
 		//エンド画面での更新処理
 		EndScene::Instance()->Update();
+		if (Input::Instance()->isKeyTrigger(DIK_SPACE)) {
+			sceneNum = TITLE_SCENE;
+		}
 		break;
 	}
 	//エスケープが押されたらループから抜ける(デバッグ用)

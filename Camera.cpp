@@ -45,34 +45,15 @@ void Camera::Init()
 
 void Camera::Update(const Vec3&pos)
 {
-
-	//forwardVec.x = cosf(angleXZ);
-	//forwardVec.z = sinf(angleXZ);
-
-
-	//// 視点が限界を超えないようにする。
-	//if (1.0f < forwardVec.y) forwardVec.y = 1.0f;
-	//if (forwardVec.y < -1.0f) forwardVec.y = -1.0f;
-
-	//// 視点座標から視点点座標を求める。
-	//const float EYE_TARGET = 100.0f;
-	//target = eye + forwardVec * EYE_TARGET;
-
-	// 上ベクトルを求める。
-/*	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER))
+	float rot_x;
+	float rot_y;
+	switch (sceneNum)
 	{
-		forwardVec = Vec3(0, 0, 0) - pos;
-		forwardVec.Normalize();
-		forwardVec.x += 0.5f;
-		forwardVec.y -= 0.3f;
-		forwardVec.z += 0.5f;
-		forwardVec.Normalize();
-		eye = forwardVec * -200.0f;
-		eye += pos;
-		target = forwardVec * 200.0f;
-		target += pos;
-	}
-	else */{
+	case TITLE_SCENE:
+		eye = Vec3(-900, 50, 0);
+		target = Vec3(0, 100, 0);
+		break;
+	case GAME_SCENE:
 		XMFLOAT2 rightStick = {};
 		rightStick.x = Input::Instance()->isPadThumb(XINPUT_THUMB_RIGHTSIDE);
 		if (fabs(rightStick.x) <= 0.2f) { rightStick.x = 0; }
@@ -87,8 +68,8 @@ void Camera::Update(const Vec3&pos)
 
 		angleXZ -= rightStick.x * ROT_UNIT;
 
-		float rot_x = cosf(angleXZ) * 1.0f;
-		float rot_y = sinf(angleXZ) * 1.0f;
+		rot_x = cosf(angleXZ) * 1.0f;
+		rot_y = sinf(angleXZ) * 1.0f;
 
 		forwardVec = Vec3(rot_x, -0.3f, rot_y);
 		forwardVec.Normalize();
@@ -97,12 +78,13 @@ void Camera::Update(const Vec3&pos)
 		eye += pos;
 		target = forwardVec * 200.0f;
 		target += pos;
-	}
-	//float add = rightStick.y * ADD_UNIT;
-	//eye.y += add;
-	//target -= add;
 
-	//AddRotationXZ(rot);
+		break;
+	case END_SCENE:
+		break;
+	default:
+		break;
+	}
 }
 
 void Camera::AddRotation(const float& RotX, const float& RotY, const float& RotZ)

@@ -37,4 +37,7 @@ public:
 	//終了処理
 	void Finalize();
 
+	//セッタ
+	void SetSceneNum(int num) { sceneNum = num; }
+
 };

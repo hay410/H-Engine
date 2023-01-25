@@ -27,6 +27,7 @@ public:
 	float angleOfView;		//‰æŠp
 
 	float angleXZ;		// XZ•½–Ê‚Å‚ÌŠp“x
+	int sceneNum;
 
 private:
 
@@ -36,6 +37,12 @@ private:
 	const float MAX_ANGLEOFVIEW = 100.0f;						//Å‘å‰æŠp
 	const float ROT_UNIT = 0.05f;
 	const float ADD_UNIT = 10.0f;
+
+	enum SceneNum {
+		TITLE_SCENE,				//ƒ^ƒCƒgƒ‹‰æ–Ê
+		GAME_SCENE,				//ƒQ[ƒ€‰æ–Ê
+		END_SCENE				//ƒGƒ“ƒh‰æ–Ê
+	};
 
 public:
 
@@ -63,5 +70,7 @@ public:
 	Vec3 GetEyeVector();
 	XMMATRIX GetMatProjection() { return matProjection; }
 	Vec3 GetEyePos() { return eye; }
-
+	void SetEyePos(const Vec3& eye) { this->eye = eye; }
+	void SetTargetPos(const Vec3& target) { this->target = target; }
+	void SetSceneNum(int sceneNum) { this->sceneNum = sceneNum; }
 };

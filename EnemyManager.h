@@ -29,4 +29,5 @@ public:
 	Enemy GetEnemy(int i) { return enemy[i]; }
 	Vec3 GetAttackVec() { return attackVec; }
 	Vec3 GetNearPos() { return playerNearPos; }
+	int GetEnemyValue() { return MAX_VALUE; }
 };

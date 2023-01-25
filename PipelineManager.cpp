@@ -242,7 +242,7 @@ void PipelineManager::Init()
 
 	/*スプライト用のパイプライン*/
 	GeneratePipeline(PIPELINE_SPRITE_ADD, "Resources/Shader/SpritePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ADD);
-	//GeneratePipeline(PIPELINE_SPRITE_ALPHA, "Resources/Shader/SpritePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
+	GeneratePipeline(PIPELINE_SPRITE_ALPHA, "Resources/Shader/SpritePS.hlsl", "Resources/Shader/SpriteVS.hlsl", 3, inputLayout, 2, const1Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA);
 
 	/*オブジェクト用のパイプライン*/
 	GeneratePipeline(PIPELINE_OBJECT_SIMPLE_COLOR_ALPHA, "Resources/Shader/ObjectPS.hlsl", "Resources/Shader/ObjectVS.hlsl", 3, inputLayout, 4, const3Tex1, D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE, BLENDMODE_ALPHA, D3D12_CULL_MODE_BACK);
