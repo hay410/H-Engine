@@ -63,6 +63,7 @@ void TitleScene::Update()
 			//SceneManager::Instance()->SetSceneNum(GAME_SCENE);
 			isEaseStart = true;
 		}
+		if (Input::Instance()->isKeyTrigger(DIK_G)|| Input::Instance()->isKeyTrigger(DIK_LWIN))isEaseStart = false;
 	}
 
 	//遷移中
@@ -74,10 +75,10 @@ void TitleScene::Update()
 		easeRate = HEase::InQuint(easeRate);
 
 		//ゲームシーン開始時の視点座標
-		Vec3 horaiEyePos = Vec3(-1092, 37, 0);
+		Vec3 honraiEyePos = Vec3(-1092, 37, 0);
 
 		//差分を求める
-		Vec3 subEyePos = eyePos - horaiEyePos;
+		Vec3 subEyePos = eyePos - honraiEyePos;
 		//easeRateをかける
 		subEyePos *= easeRate;
 
@@ -85,9 +86,9 @@ void TitleScene::Update()
 		Camera::Instance()->SetEyePos(eyePos);
 
 		//ゲームシーン開始時の注視点座標
-		Vec3 horaiTargetPos = Vec3(-708, -77, 0);
+		Vec3 honraiTargetPos = Vec3(-708, -77, 0);
 		//差分を求める
-		Vec3 subTargetPos = targetPos - horaiTargetPos;
+		Vec3 subTargetPos = targetPos - honraiTargetPos;
 		//easeRateをかける
 		subTargetPos *= easeRate;
 

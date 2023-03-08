@@ -8,7 +8,7 @@ GameScene::GameScene()
 
 	player.Init();
 
-	kariStage.Generate({ 0,-50,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "stage", L"Resources/Object/stage/color.png");
+	kariStage.Generate({ 0,-50,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "stage", L"Resources/Object/stage/color.png");
 	//kariStage.Generate({ 0,-50,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "stage", L"Resources/Object/stage/color.png");
 	kariStage.ChangeScale(15, 15, 15);
 
