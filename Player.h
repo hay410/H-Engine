@@ -24,27 +24,6 @@ private:
 	const int	MAX_STUN_TIMER = 60;			//スタンの時間
 	const float LOCKON_RANGE = 500.0f;			//ロックオンの距離
 
-	const int	MAX_JAB_START_TIMER = 12;		//発生フレーム
-	const int	MAX_JAB_HIT_TIMER = 6;			//判定フレーム
-	const int	MAX_JAB_END_TIMER = 30;			//後隙フレーム
-	const int	JAB_DAMAGE = 20;				//ダメージ量
-	const float JAB_KNOCKBACK_POWER = 4.0f;		//ノックバックの強さ
-	const float JAB_STEP_RANGE = 3.0f;			//ステップの距離
-
-	const int	MAX_HOOK_START_TIMER = 8;		//発生フレーム
-	const int	MAX_HOOK_HIT_TIMER = 6;			//判定フレーム
-	const int	MAX_HOOK_END_TIMER = 30;		//後隙フレーム
-	const int	HOOK_DAMAGE = 30;				//ダメージ量
-	const float HOOK_KNOCKBACK_POWER = 6.0f;	//ノックバックの強さ
-	const float HOOK_STEP_RANGE = 6.0f;			//ステップの距離
-
-	const int	MAX_UPPER_START_TIMER = 12;		//発生フレーム
-	const int	MAX_UPPER_HIT_TIMER = 6;			//判定フレーム
-	const int	MAX_UPPER_END_TIMER = 40;		//後隙フレーム
-	const int	UPPER_DAMAGE = 50;				//ダメージ量
-	const float UPPER_KNOCKBACK_POWER = 24.0f;	//ノックバックの強さ
-	const float UPPER_STEP_RANGE = 9.0f;		//ステップの距離
-
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
