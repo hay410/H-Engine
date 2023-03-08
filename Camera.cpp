@@ -81,6 +81,9 @@ void Camera::Update(const Vec3&pos)
 
 		break;
 	case END_SCENE:
+		eye = Vec3(0, 60, 200);
+		target = Vec3(0, 0, 0);
+		up = Vec3(0, 1, 0);
 		break;
 	default:
 		break;

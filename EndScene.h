@@ -13,7 +13,9 @@ class EndScene :public Singleton<EndScene>
 {
 public:
 	/*---- ƒƒ“ƒo’è” ----*/
-
+	Object3D box;
+	Sprite pera;
+	float alpha1;
 
 	/*---- ƒƒ“ƒo•Ï” ----*/
 
