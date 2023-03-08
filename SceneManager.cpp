@@ -47,15 +47,27 @@ void SceneManager::Update()
 	case END_SCENE:
 		//エンド画面での更新処理
 		EndScene::Instance()->Update();
-		if (Input::Instance()->isKeyTrigger(DIK_SPACE)) {
-			sceneNum = TITLE_SCENE;
-		}
+		//if (Input::Instance()->isKeyTrigger(DIK_SPACE)) {
+		//	sceneNum = TITLE_SCENE;
+		//}
 		break;
 	}
-	//エスケープが押されたらループから抜ける(デバッグ用)
-	if (Input::Instance()->isKeyTrigger(DIK_ESCAPE) && isDebug)
-	{
-		exit(0);
+	if (isDebug) {
+		//エスケープが押されたらループから抜ける(デバッグ用)
+		if (Input::Instance()->isKeyTrigger(DIK_ESCAPE))
+		{
+			exit(0);
+		}
+
+		if (Input::Instance()->isKeyTrigger(DIK_1)) {
+			sceneNum = TITLE_SCENE;
+		}
+		if (Input::Instance()->isKeyTrigger(DIK_2)) {
+			sceneNum = GAME_SCENE;
+		}
+		if (Input::Instance()->isKeyTrigger(DIK_3)) {
+			sceneNum = END_SCENE;
+		}
 	}
 }
 
