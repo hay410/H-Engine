@@ -74,23 +74,10 @@ private:
 	float valueKBackVel;	//敵をノックバックさせるために敵に渡す加速度
 	int stunTimer;			//スタンのタイマー
 
-	//弱パンチ
-	bool isJab;
-	int jabStartTmier;
-	int jabHitTimer;
-	int jabEndTimer;
-
-	//強パンチ
-	bool isHook;
-	int hookStartTmier;
-	int hookHitTimer;
-	int hookEndTimer;
-	
-	//強強パンチ
-	bool isUpper;
-	int upperStartTmier;
-	int upperHitTimer;
-	int upperEndTimer;
+	//攻撃用
+	int insidenceFrame;//発生フレーム
+	int detectionFrame;//判定フレーム
+	int rigidityFrame;//硬直フレーム
 
 	//当たり判定用
 	Sphere bodySphere;
@@ -113,15 +100,7 @@ private:
 	
 	//攻撃
 	void Attack();
-	
-	//弱パンチ
-	void Jab();
 
-	//強パンチ
-	void Hook();
-
-	//強強パンチ
-	void Upper();
 
 	//ノックバック
 	void KnockBack(const Vec3& attackVec);

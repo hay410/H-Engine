@@ -22,20 +22,10 @@ Player::Player()
 	isAlive = true;
 	is1Hit = true;
 
-	isJab = false;
-	jabStartTmier = 0;
-	jabHitTimer = 0;
-	jabEndTimer = 0;
+	insidenceFrame = 0;
+	detectionFrame = 0;
+	rigidityFrame = 0;
 
-	isHook = false;
-	hookStartTmier = 0;
-	hookHitTimer = 0;
-	hookEndTimer = 0;
-
-	isUpper = false;
-	upperStartTmier = 0;
-	upperHitTimer = 0;
-	upperEndTimer = 0;
 		
 	isKnockBack = false;
 	kBackVel = 0.0f;
@@ -216,149 +206,70 @@ void Player::Guard()
 void Player::Attack()
 {
 	isHit = false;
-	Jab();
-	Hook();
-	Upper();
-}
 
-void Player::Jab()
-{
-	if (!isHook && !isUpper) {
+	bool isAllAttackFalse = true;
+	for (int i = 0; i < attackInfo.size(); i++) {
+		if (attackInfo[i].isAttack == false)continue;
+		isAllAttackFalse = false;
+	}
+
+	if (isAllAttackFalse) {
 		if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
 			if (!isKnockBack)
-				isJab = true;
+				attackInfo[0].isAttack = true;
 		}
 	}
 
-	if (!isJab)return;
+	for (int i = 0; i < attackInfo.size(); i++) {
+		if (!attackInfo[i].isAttack)continue;
 
-	if (jabStartTmier < MAX_JAB_START_TIMER) {
-		jabStartTmier++;
-	}
-	else {
-		speed = 0.0f;
-		if (jabHitTimer < MAX_JAB_HIT_TIMER) {
-
-			if (stepSpeed >= 0.0f) {
-				stepSpeed = JAB_STEP_RANGE;
-				Vec3 stepVec = forwardVec * stepSpeed;
-				position += stepVec;
-				stepSpeed -= 2.0f;
-			}
-
-			jabHitTimer++;
-			isHit = true;
-			damage = JAB_DAMAGE;
-			valueKBackVel = JAB_KNOCKBACK_POWER;
-			attackVec = forwardVec;
+		if (insidenceFrame < attackInfo[i].insidenceFrame) {
+			insidenceFrame++;
 		}
 		else {
-			if (jabEndTimer < MAX_JAB_END_TIMER) {
-				jabEndTimer++;
+			speed = 0.0f;
+			if (detectionFrame < attackInfo[i].detectionFrame) {
 
-				//UŒ‚”h¶‚Ì“ü—Í‚ðŽæ‚é
-				if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-					isHook = true;
+				if (stepSpeed >= 0.0f) {
+					stepSpeed = attackInfo[i].stepDistance;
+					Vec3 stepVec = forwardVec * stepSpeed;
+					position += stepVec;
+					stepSpeed -= 2.0f;
+				}
+
+				detectionFrame++;
+				isHit = true;
+				damage = attackInfo[i].damageAmount;
+				valueKBackVel = attackInfo[i].knockBackPower;
+				attackVec = forwardVec;
+			}
+			else {
+				if (rigidityFrame < attackInfo[i].rigidityFrame) {
+					rigidityFrame++;
+
+					if (i < attackInfo.size() - 1) {
+						//UŒ‚”h¶‚Ì“ü—Í‚ðŽæ‚é
+						if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
+							attackInfo[i + 1].isAttack = true;
+							attackInfo[i].isAttack = false;
+							insidenceFrame = 0;
+							detectionFrame = 0;
+							rigidityFrame = 0;
+							stepSpeed = 0.0f;
+						}
+					}
+				}
+				else {
+					attackInfo[i].isAttack = false;
+					insidenceFrame = 0;
+					detectionFrame = 0;
+					rigidityFrame = 0;
+					speed = MAX_SPEED;
+					is1Hit = true;
 					stepSpeed = 0.0f;
 				}
 			}
-			else {
-				isJab = false;
-				jabStartTmier = 0;
-				jabHitTimer = 0;
-				jabEndTimer = 0;
-				speed = MAX_SPEED;
-				is1Hit = true;
-				stepSpeed = 0.0f;
-			}
 		}
-	}
-}
-
-void Player::Hook()
-{
-	if (!isHook)return;
-
-	if (hookStartTmier < MAX_HOOK_START_TIMER) {
-		hookStartTmier++;
-	}
-	else {
-		speed = 0.0f;
-		if (hookHitTimer < MAX_HOOK_HIT_TIMER) {
-			if (stepSpeed >= 0.0f) {
-				stepSpeed = HOOK_STEP_RANGE;
-				Vec3 stepVec = forwardVec * stepSpeed;
-				position += stepVec;
-				stepSpeed -= 2.0f;
-			}
-
-			hookHitTimer++;
-			isHit = true;
-			damage = HOOK_DAMAGE;
-			valueKBackVel = HOOK_KNOCKBACK_POWER;
-			attackVec = forwardVec;
-		}
-		else {
-			if (hookEndTimer < MAX_HOOK_END_TIMER) {
-				hookEndTimer++;
-
-				//UŒ‚”h¶‚Ì“ü—Í‚ðŽæ‚é
-				if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-					isUpper = true;
-					stepSpeed = 0.0f;
-				}
-			}
-			else {
-				isHook = false;
-				hookStartTmier = 0;
-				hookHitTimer = 0;
-				hookEndTimer = 0;
-				speed = MAX_SPEED;
-				is1Hit = true;
-				stepSpeed = 0.0f;
-			}
-		}
-	}
-}
-
-void Player::Upper()
-{
-	if (!isUpper)return;
-
-	if (upperStartTmier < MAX_HOOK_START_TIMER) {
-		upperStartTmier++;
-	}
-	else {
-		speed = 0.0f;
-		if (upperHitTimer < MAX_HOOK_HIT_TIMER) {
-			if (stepSpeed >= 0.0f) {
-				stepSpeed = UPPER_STEP_RANGE;
-				Vec3 stepVec = forwardVec * stepSpeed;
-				position += stepVec;
-				stepSpeed -= 2.0f;
-			}
-
-			upperHitTimer++;
-			isHit = true;
-			damage = UPPER_DAMAGE;
-			valueKBackVel = UPPER_KNOCKBACK_POWER;
-			attackVec = forwardVec;
-		}
-		else {
-			if (upperEndTimer < MAX_HOOK_END_TIMER) {
-				upperEndTimer++;
-			}
-			else {
-				isUpper = false;
-				upperStartTmier = 0;
-				upperHitTimer = 0;
-				upperEndTimer = 0;
-				speed = MAX_SPEED;
-				is1Hit = true;
-				stepSpeed = 0.0f;
-			}
-		}
-
 	}
 }
 
