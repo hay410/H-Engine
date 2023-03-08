@@ -45,4 +45,5 @@ public:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDescHeap();
 	//指定の番号のテクスチャを返す。
 	Texture GetTexture(int ID);
+
 };

@@ -23,15 +23,73 @@ int TextureManager::LoadTexture(LPCWSTR fileName) {
 		}
 	}
 
+	//フルパスを分離して拡張子を取り出す
+	wstring fileExt_;
+	wstring fileName_;
+	wstring directoryPath_;
+	size_t pos1;
+	std::wstring exceptExt;
+	wstring fullPath = fileName;
+	bool isComp = false;
+
+	//区切り文字'.'が出てくる一番最後の部分を検索
+	pos1 = fullPath.rfind('.');
+	//検索がヒットしたら
+	if (pos1 != std::wstring::npos) {
+		//区切り文字の後ろをファイル拡張子として保存
+		fileExt_ = fullPath.substr(pos1 + 1, fullPath.size() - pos1 - 1);
+		//区切り文字の前までを抜き出す
+		exceptExt = fullPath.substr(0, pos1);
+	}
+	else {
+		fileExt_ = L"";
+		exceptExt = fileName;
+	}
+	//区切り文字 '\\'が出てくる一番最後の部分を検索
+	pos1 = exceptExt.rfind('//');
+	//検索がヒットしたら
+	if (pos1 != std::wstring::npos) {
+		//区切り文字の後ろをディレクトリパスとして保存
+		directoryPath_ = exceptExt.substr(0, pos1 + 1);
+		//区切り文字の後ろをファイル名として保存
+		fileName_ = exceptExt.substr(pos1 + 1, exceptExt.size() - pos1 - 1);
+		isComp = true;
+	}
+	//区切り文字 '\'が出てくる一番最後の部分を検索
+	pos1 = exceptExt.rfind('/');
+	//検索がヒットしたら
+	if (pos1 != std::wstring::npos&&!isComp) {
+		//区切り文字の後ろをディレクトリパスとして保存
+		directoryPath_ = exceptExt.substr(0, pos1 + 1);
+		//区切り文字の後ろをファイル名として保存
+		fileName_ = exceptExt.substr(pos1 + 1, exceptExt.size() - pos1 - 1);
+		isComp = true;
+	}
+	//区切り文字がないのでファイル名のみとして扱う
+	if (!isComp) {
+		directoryPath_ = L"";
+		fileName_ = exceptExt;
+	}
 
 	//ロードしていなかったらロードする
 	DirectX::TexMetadata metadata;
 	DirectX::ScratchImage scratchImg;
-	HRESULT result = LoadFromWICFile(
-		fileName,
-		DirectX::WIC_FLAGS::WIC_FLAGS_NONE,
-		&metadata, scratchImg
-	);
+	HRESULT result;
+
+	if (fileExt_ == L"dds") {
+		result = LoadFromDDSFile(
+			fileName,
+			DirectX::DDS_FLAGS_NONE,
+			&metadata, scratchImg
+		);
+	}
+	else {
+		result = LoadFromWICFile(
+			fileName,
+			DirectX::WIC_FLAGS::WIC_FLAGS_NONE,
+			&metadata, scratchImg
+		);
+	}
 	const DirectX::Image* img = scratchImg.GetImage(0, 0, 0);
 
 	//リソース設定
@@ -52,13 +110,19 @@ int TextureManager::LoadTexture(LPCWSTR fileName) {
 		IID_PPV_ARGS(&texbuff));
 
 	//データ転送
-	result = texbuff->WriteToSubresource(
-		0,
-		nullptr,							//全領域コピー
-		img->pixels,						//元データの先頭アドレス
-		(UINT)img->rowPitch,				//一ラインのサイズ
-		(UINT)img->slicePitch				//いちまいのサイズ
-	);
+	//全ミップマップについて
+	for (size_t i = 0; i < metadata.mipLevels; i++) {
+		//ミップマップレベルを指定してイメージを取得
+		const DirectX::Image* img = scratchImg.GetImage(i, 0, 0);
+		//テクスチャバッファにデータ転送
+		result = texbuff->WriteToSubresource(
+			(UINT)i,
+			nullptr,							//全領域コピー
+			img->pixels,						//元データの先頭アドレス
+			(UINT)img->rowPitch,				//一ラインのサイズ
+			(UINT)img->slicePitch				//いちまいのサイズ
+		);
+	}
 
 	//テクスチャ配列の最後尾にロードしたテクスチャ情報を記録
 	Texture proTexture{};
