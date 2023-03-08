@@ -8,6 +8,7 @@
 #include "DescriptorHeapManager.h"
 #include "LightManager.h"
 #include "Collision.h"
+#include "Melee.h"
 
 class Player
 {
@@ -64,6 +65,8 @@ private:
 	int damage;					//敵に与えるダメージ
 	bool is1Hit;				//当たり判定トリガーフラグ
 	float stepSpeed;			//攻撃時のステップの速度
+
+	vector<AttackInfo> attackInfo;
 
 	//ノックバック用
 	bool isKnockBack;
@@ -122,6 +125,9 @@ private:
 
 	//ノックバック
 	void KnockBack(const Vec3& attackVec);
+
+	//csvから攻撃情報を読み込み
+	void LoadAttackInfoFromCSV();
 
 public:
 	

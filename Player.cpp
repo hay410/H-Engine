@@ -1,10 +1,12 @@
 #include"Player.h"
 #include"HHelper.h"
+#include<fstream>
+#include<sstream>
 
 Player::Player()
 {
+	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Body", L"Resources/Object/Body/Body.png");
 	//object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "Body", L"Resources/Object/Body/Body.png");
-	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "Body", L"Resources/Object/Body/Body.png");
 	sphere.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_NOLIGHT_ALPHA, "Ball", L"Resources/white1x1.png");
 
 	position = XMFLOAT3( 0, 0, 0);
@@ -40,6 +42,8 @@ Player::Player()
 	HP = MAX_HP;
 	stepSpeed = 0.0f;
 	stunTimer = 0;
+
+	LoadAttackInfoFromCSV();
 }
 
 void Player::Move()
@@ -159,7 +163,6 @@ void Player::Walk()
 	}
 }
 
-//スウェイ(回避)
 void Player::Sway()
 {
 	//入力情報を得ておく
@@ -383,6 +386,79 @@ void Player::KnockBack(const Vec3& attackVec)
 	//{
 	//	kBackVel = SWAY_SPEED;
 	//}
+}
+
+void Player::LoadAttackInfoFromCSV()
+{
+	ifstream ifs("Resources/CSV/AttackInfo.csv");
+	string str = "";
+	int i = 0, j = 0;
+
+	if (!ifs) {
+		assert(0);
+	}
+	
+	while (getline(ifs, str))
+	{
+		string tmp = "";
+		istringstream stream(str);
+
+		AttackInfo a;
+
+		// 区切り文字がなくなるまで文字を区切っていく
+		while (getline(stream, tmp, ','))
+		{
+			// 区切られた文字がtmpに入る
+			switch (j)
+			{
+				case static_cast<int>(ATTACK_INFO::INSIDENCE_FRAME) :
+					a.insidenceFrame = atoi(tmp.c_str());
+					break;
+				case static_cast<int>(ATTACK_INFO::DETECTION_FRAME) :
+					a.detectionFrame = atoi(tmp.c_str());
+					break;
+				case static_cast<int>(ATTACK_INFO::RIGIDITY_FRAME) :
+					a.rigidityFrame = atoi(tmp.c_str());
+					break;
+				case static_cast<int>(ATTACK_INFO::DAMAGE_AMOUNT) :
+					a.damageAmount = atoi(tmp.c_str());
+					break;
+				case static_cast<int>(ATTACK_INFO::KNOCKBACK_POWER) :
+					a.knockBackPower = atoi(tmp.c_str());
+					break;
+				case static_cast<int>(ATTACK_INFO::STEP_DISTANCE) :
+					a.stepDistance = atoi(tmp.c_str());
+					break;
+				case static_cast<int>(ATTACK_INFO::STARTVEC_X) :
+					a.startVec.x = static_cast<float>(atoi(tmp.c_str()));
+					break;
+				case static_cast<int>(ATTACK_INFO::STARTVEC_Y) :
+					a.startVec.y = static_cast<float>(atoi(tmp.c_str()));
+					break;
+				case static_cast<int>(ATTACK_INFO::STARTVEC_Z) :
+					a.startVec.z = static_cast<float>(atoi(tmp.c_str()));
+					break;
+				case static_cast<int>(ATTACK_INFO::ENDVEC_X) :
+					a.endVec.x = static_cast<float>(atoi(tmp.c_str()));
+					break;
+				case static_cast<int>(ATTACK_INFO::ENDVEC_Y) :
+					a.endVec.y = static_cast<float>(atoi(tmp.c_str()));
+					break;
+				case static_cast<int>(ATTACK_INFO::ENDVEC_Z) :
+					a.endVec.z = static_cast<float>(atoi(tmp.c_str()));
+					break;
+
+				default:
+					break;
+			}
+			j++;
+		}
+		attackInfo.push_back(a);
+
+		j = 0;
+		i++;  // 次の人の配列に移る
+	}
+	attackInfo.erase(attackInfo.begin());
 }
 
 void Player::Init()

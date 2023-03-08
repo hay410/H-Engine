@@ -172,6 +172,7 @@
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FbxObject3D.cpp" />
+    <ClCompile Include="Melee.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="MultiPath.cpp" />
     <ClCompile Include="Object3D.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineBase.h" />
+    <ClInclude Include="Melee.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="MultiPath.h" />
     <ClInclude Include="Object3D.h" />
