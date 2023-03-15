@@ -128,6 +128,14 @@ namespace HHelper
 	inline XMFLOAT3 GetRandXMFLOAT3(const int& min, const int& max) {
 		return XMFLOAT3(GetRand(min, max), GetRand(min, max), GetRand(min, max));
 	}
+
+	//clamp
+	inline float clamp(float low, float v, float high) {
+		if (v < low)return low + 0.01f;
+		if (v > high)return high - 0.01f;
+		return v;
+	}
+
 	//
 	//wstring ConvertMultiByteStringToWideString(const string& mString)
 	//{

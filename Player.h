@@ -25,6 +25,22 @@ private:
 	const float LOCKON_RANGE = 500.0f;			//ロックオンの距離
 
 
+	enum ATTACK_INFO
+	{
+		INSIDENCE_FRAME,
+		DETECTION_FRAME,
+		RIGIDITY_FRAME,
+		DAMAGE_AMOUNT,
+		KNOCKBACK_POWER,
+		STEP_DISTANCE,
+		STARTVEC_X,
+		STARTVEC_Y,
+		STARTVEC_Z,
+		ENDVEC_X,
+		ENDVEC_Y,
+		ENDVEC_Z,
+	};
+
 	//メンバ変数
 	//プレイヤーモデルのデータ
 	Object3D object;			//モデル
@@ -54,9 +70,9 @@ private:
 	int stunTimer;			//スタンのタイマー
 
 	//攻撃用
-	int insidenceFrame;//発生フレーム
-	int detectionFrame;//判定フレーム
-	int rigidityFrame;//硬直フレーム
+	int insidenceFrame_;//発生フレーム
+	int detectionFrame_;//判定フレーム
+	int rigidityFrame_;//硬直フレーム
 
 	//当たり判定用
 	Sphere bodySphere;

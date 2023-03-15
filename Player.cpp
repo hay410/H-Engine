@@ -22,9 +22,9 @@ Player::Player()
 	isAlive = true;
 	is1Hit = true;
 
-	insidenceFrame = 0;
-	detectionFrame = 0;
-	rigidityFrame = 0;
+	insidenceFrame_ = 0;
+	detectionFrame_ = 0;
+	rigidityFrame_ = 0;
 
 		
 	isKnockBack = false;
@@ -71,18 +71,8 @@ void Player::Move()
 		position += rightVec * amountX;
 		position += cameraForwardVec * amountZ;
 
-		if (position.x >= 2500) {
-			position.x = 2499.99f;
-		}
-		if (position.x <= -1000) {
-			position.x = -999.99f;
-		}
-		if (position.z <= -410) {
-			position.z = -409.99f;
-		}
-		if (position.z >= 410) {
-			position.z = 409.99f;
-		}
+		position.x = HHelper::clamp(-1000, position.x, 2500);
+		position.z = HHelper::clamp(-410, position.z, 410);
 		
 
 		//ì¸óÕèÓïÒÇXZé≤ïΩñ ÇÃÉxÉNÉgÉãÇ…Ç∑ÇÈ
@@ -223,12 +213,12 @@ void Player::Attack()
 	for (int i = 0; i < attackInfo.size(); i++) {
 		if (!attackInfo[i].isAttack)continue;
 
-		if (insidenceFrame < attackInfo[i].insidenceFrame) {
-			insidenceFrame++;
+		if (insidenceFrame_ < attackInfo[i].insidenceFrame) {
+			insidenceFrame_++;
 		}
 		else {
 			speed = 0.0f;
-			if (detectionFrame < attackInfo[i].detectionFrame) {
+			if (detectionFrame_ < attackInfo[i].detectionFrame) {
 
 				if (stepSpeed >= 0.0f) {
 					stepSpeed = attackInfo[i].stepDistance;
@@ -237,33 +227,33 @@ void Player::Attack()
 					stepSpeed -= 2.0f;
 				}
 
-				detectionFrame++;
+				detectionFrame_++;
 				isHit = true;
 				damage = attackInfo[i].damageAmount;
 				valueKBackVel = attackInfo[i].knockBackPower;
 				attackVec = forwardVec;
 			}
 			else {
-				if (rigidityFrame < attackInfo[i].rigidityFrame) {
-					rigidityFrame++;
+				if (rigidityFrame_ < attackInfo[i].rigidityFrame) {
+					rigidityFrame_++;
 
 					if (i < attackInfo.size() - 1) {
 						//çUåÇîhê∂ÇÃì¸óÕÇéÊÇÈ
 						if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
 							attackInfo[i + 1].isAttack = true;
 							attackInfo[i].isAttack = false;
-							insidenceFrame = 0;
-							detectionFrame = 0;
-							rigidityFrame = 0;
+							insidenceFrame_ = 0;
+							detectionFrame_ = 0;
+							rigidityFrame_ = 0;
 							stepSpeed = 0.0f;
 						}
 					}
 				}
 				else {
 					attackInfo[i].isAttack = false;
-					insidenceFrame = 0;
-					detectionFrame = 0;
-					rigidityFrame = 0;
+					insidenceFrame_ = 0;
+					detectionFrame_ = 0;
+					rigidityFrame_ = 0;
 					speed = MAX_SPEED;
 					is1Hit = true;
 					stepSpeed = 0.0f;
@@ -322,40 +312,40 @@ void Player::LoadAttackInfoFromCSV()
 			// ãÊêÿÇÁÇÍÇΩï∂éöÇ™tmpÇ…ì¸ÇÈ
 			switch (j)
 			{
-				case static_cast<int>(ATTACK_INFO::INSIDENCE_FRAME) :
+				case INSIDENCE_FRAME :
 					a.insidenceFrame = atoi(tmp.c_str());
 					break;
-				case static_cast<int>(ATTACK_INFO::DETECTION_FRAME) :
+				case DETECTION_FRAME :
 					a.detectionFrame = atoi(tmp.c_str());
 					break;
-				case static_cast<int>(ATTACK_INFO::RIGIDITY_FRAME) :
+				case RIGIDITY_FRAME :
 					a.rigidityFrame = atoi(tmp.c_str());
 					break;
-				case static_cast<int>(ATTACK_INFO::DAMAGE_AMOUNT) :
+				case DAMAGE_AMOUNT :
 					a.damageAmount = atoi(tmp.c_str());
 					break;
-				case static_cast<int>(ATTACK_INFO::KNOCKBACK_POWER) :
+				case KNOCKBACK_POWER :
 					a.knockBackPower = atoi(tmp.c_str());
 					break;
-				case static_cast<int>(ATTACK_INFO::STEP_DISTANCE) :
+				case STEP_DISTANCE :
 					a.stepDistance = atoi(tmp.c_str());
 					break;
-				case static_cast<int>(ATTACK_INFO::STARTVEC_X) :
+				case STARTVEC_X :
 					a.startVec.x = static_cast<float>(atoi(tmp.c_str()));
 					break;
-				case static_cast<int>(ATTACK_INFO::STARTVEC_Y) :
+				case STARTVEC_Y :
 					a.startVec.y = static_cast<float>(atoi(tmp.c_str()));
 					break;
-				case static_cast<int>(ATTACK_INFO::STARTVEC_Z) :
+				case STARTVEC_Z :
 					a.startVec.z = static_cast<float>(atoi(tmp.c_str()));
 					break;
-				case static_cast<int>(ATTACK_INFO::ENDVEC_X) :
+				case ENDVEC_X :
 					a.endVec.x = static_cast<float>(atoi(tmp.c_str()));
 					break;
-				case static_cast<int>(ATTACK_INFO::ENDVEC_Y) :
+				case ENDVEC_Y :
 					a.endVec.y = static_cast<float>(atoi(tmp.c_str()));
 					break;
-				case static_cast<int>(ATTACK_INFO::ENDVEC_Z) :
+				case ENDVEC_Z :
 					a.endVec.z = static_cast<float>(atoi(tmp.c_str()));
 					break;
 
