@@ -10,9 +10,9 @@ Melee::Melee()
 	melee_ = {};
 	isMelee_ = false;
 	name_ = "";
-	startTimer_ = 0;
-	hitTimer_ = 0;
-	endTimer_ = 0;
+	insidenceFrame_ = 0;
+	detectionFrame_ = 0;
+	rigidityFrame_ = 0;
 	startVec_ = Vec3();
 	endVec_ = Vec3();
 }
@@ -34,8 +34,30 @@ void Melee::Update(bool isAttack, const AttackInfo& attackInfo)
 	if (!isAttack) {
 		
 	}
+	//çUåÇéû
 	else {
+		if (insidenceFrame_ < attackInfo.insidenceFrame) {
+			insidenceFrame_++;
+		}
+		else {
+			
+			if (detectionFrame_ < attackInfo.detectionFrame) {
 
+				detectionFrame_++;
+			}
+			else {
+				if (rigidityFrame_ < attackInfo.rigidityFrame) {
+					
+					rigidityFrame_++;
+				}
+				else {
+					insidenceFrame_ = 0;
+					detectionFrame_ = 0;
+					rigidityFrame_ = 0;	
+
+				}
+			}
+		}
 	}
 }
 

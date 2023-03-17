@@ -6,7 +6,7 @@
 SceneManager::SceneManager()
 {
 	sceneNum = TITLE_SCENE;
-	isDebug = true;
+	isDebug = false;
 
 	DxBase.Init();
 

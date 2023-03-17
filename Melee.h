@@ -24,28 +24,8 @@ struct AttackInfo {
 	}
 };
 
-enum class ATTACK_INFO
-{
-	INSIDENCE_FRAME,
-	DETECTION_FRAME,
-	RIGIDITY_FRAME,
-	DAMAGE_AMOUNT,
-	KNOCKBACK_POWER,
-	STEP_DISTANCE,
-	STARTVEC_X,
-	STARTVEC_Y,
-	STARTVEC_Z,
-	ENDVEC_X,
-	ENDVEC_Y,
-	ENDVEC_Z,
-};
-
-
 class Melee
 {
-public:
-
-
 private:
 	//ê√ìIÉÅÉìÉoïœêî
 	static Object3D melee_;
@@ -56,9 +36,9 @@ private:
 	Vec3 position_;
 	bool isMelee_;
 	string name_;
-	int startTimer_;
-	int hitTimer_;
-	int endTimer_;
+	int insidenceFrame_;
+	int detectionFrame_;
+	int rigidityFrame_;
 	Vec3 startVec_;
 	Vec3 endVec_;
 	Vec3 edgeVec_ = Vec3(0, 1.0, 0);
@@ -70,6 +50,6 @@ public:
 	Melee();
 	static void Load();
 	static void CommonUpdate(const Vec3& pPos, const Vec3& pFVec);
-	void Update(const AttackInfo& attackInfo);
+	void Update(bool isAttack, const AttackInfo& attackInfo);
 	void Draw();
 };

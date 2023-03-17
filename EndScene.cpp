@@ -33,6 +33,6 @@ void EndScene::Update()
 
 void EndScene::Draw()
 {
-	box.Draw();
-	pera.Draw();
+	//box.Draw();
+	//pera.Draw();
 }
