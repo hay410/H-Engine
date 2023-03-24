@@ -5,33 +5,33 @@
 
 Player::Player()
 {
-	object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Body", L"Resources/Object/Body/Body.png");
+	object_.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_TOONSHADER_ALPHA, "Body", L"Resources/Object/Body/Body.png");
 	//object.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_LIGHT_ALPHA, "Body", L"Resources/Object/Body/Body.png");
 	sphere.Generate({ 0,0,0 }, PROJECTIONID_OBJECT, PIPELINE_OBJECT_NOLIGHT_ALPHA, "Ball", L"Resources/white1x1.png");
 
-	position = XMFLOAT3( 0, 0, 0);
-	object.ChangeScale({ 1.5,1.5,1.5 });
+	position_ = XMFLOAT3( 0, 0, 0);
+	object_.ChangeScale({ 1.5,1.5,1.5 });
 	sphere.ChangeScale({ 10,10,10 });
-	forwardVec = Vec3(0, 0, 1);
-	radius = 20.0f;
-	previousForwardVec = forwardVec;
-	speed = MAX_SPEED;
-	isSway = false;
-	isLockOn = false;
-	isGuard = false;
-	isAlive = true;
-	is1Hit = true;
+	forwardVec_ = Vec3(0, 0, 1);
+	radius_ = 20.0f;
+	previousForwardVec_ = forwardVec_;
+	speed_ = MAX_SPEED;
+	isSway_ = false;
+	isLockOn_ = false;
+	isGuard_ = false;
+	isAlive_ = true;
+	is1Hit_ = true;
 
 	insidenceFrame_ = 0;
 	detectionFrame_ = 0;
 	rigidityFrame_ = 0;
 
 		
-	isKnockBack = false;
-	kBackVel = 0.0f;
-	HP = MAX_HP;
-	stepSpeed = 0.0f;
-	stunTimer = 0;
+	isKnockBack_ = false;
+	kBackVel_ = 0.0f;
+	HP_ = MAX_HP;
+	stepSpeed_ = 0.0f;
+	stunTimer_ = 0;
 
 	LoadAttackInfoFromCSV();
 }
@@ -41,7 +41,7 @@ void Player::Move()
 	float angle;
 	//コントローラー入力
 	XMFLOAT2 leftStick = { 0.0f,0.0f };
-	if (!isKnockBack) {
+	if (!isKnockBack_) {
 		leftStick.x = Input::Instance()->isPadThumb(XINPUT_THUMB_LEFTSIDE);
 		if (fabs(leftStick.x) <= 0.1f) { leftStick.x = 0; }
 		leftStick.y = Input::Instance()->isPadThumb(XINPUT_THUMB_LEFTVERT);
@@ -64,15 +64,15 @@ void Player::Move()
 		Vec3 rightVec = Vec3(cameraForwardVec.z, 0, -cameraForwardVec.x);
 		
 		//入力情報と速度からXZそれぞれの移動量を求める
-		float amountX = leftStick.x * speed;
-		float amountZ = leftStick.y * speed;
+		float amountX = leftStick.x * speed_;
+		float amountZ = leftStick.y * speed_;
 
 		//求めた移動量から自機の座標を移動させる
-		position += rightVec * amountX;
-		position += cameraForwardVec * amountZ;
+		position_ += rightVec * amountX;
+		position_ += cameraForwardVec * amountZ;
 
-		position.x = HHelper::clamp(-1000, position.x, 2500);
-		position.z = HHelper::clamp(-410, position.z, 410);
+		position_.x = HHelper::clamp(-1000, position_.x, 2500);
+		position_.z = HHelper::clamp(-410, position_.z, 410);
 		
 
 		//入力情報をXZ軸平面のベクトルにする
@@ -93,39 +93,39 @@ void Player::Move()
 			//上で得た角度から入力ベクトルをy軸回転させる
 			if (cameraForwardVec.z < 0)angle *= -1;
 
-			forwardVec.x = inputVec.x * sinf(angle) + inputVec.z * cosf(angle);
-			forwardVec.z = -inputVec.x * cosf(angle) + inputVec.z * sinf(angle);
-			forwardVec.Normalize();
+			forwardVec_.x = inputVec.x * sinf(angle) + inputVec.z * cosf(angle);
+			forwardVec_.z = -inputVec.x * cosf(angle) + inputVec.z * sinf(angle);
+			forwardVec_.Normalize();
 
 			//オブジェクトの回転を初期化
-			object.InitRotation();
+			object_.InitRotation();
 
 			//自機の正面ベクトルとカメラの正面ベクトルの角度を求める
-			angle = forwardVec.Dot(Vec3(1, 0, 0));
+			angle = forwardVec_.Dot(Vec3(1, 0, 0));
 			angle = acos(angle);
 
 			if (inputVec.z < 0) {
-				object.ChangeRotation({ 0,angle,0 });
+				object_.ChangeRotation({ 0,angle,0 });
 			}
 			else {
-				object.ChangeRotation({ 0,HHelper::H_2PI_F - angle,0 });
+				object_.ChangeRotation({ 0,HHelper::H_2PI_F - angle,0 });
 			}
 		}
 	
 		//ロックオン時は歩かせる
 		Walk();
 
-		previousForwardVec = forwardVec;
+		previousForwardVec_ = forwardVec_;
 	}
 }
 
 void Player::Walk()
 {
 	//ロックオン中は移動速度を遅くする
-	isLockOn = false;
+	isLockOn_ = false;
 	//ボタンかキーを押してる間はロックオン状態とする
 	if (Input::Instance()->isPad(XINPUT_GAMEPAD_RIGHT_SHOULDER)|| Input::Instance()->isKey(DIK_LSHIFT)) {
-		isLockOn = true;
+		isLockOn_ = true;
 
 		//Vec3 directtionVec = Vec3(enemyNearPos - position);
 		//float distance = directtionVec.Length();
@@ -135,11 +135,11 @@ void Player::Walk()
 		//	forwardVec = directtionVec;
 		//}
 	}
-	if (isLockOn && !isSway) {
-		speed = WALK_SPEED;
+	if (isLockOn_ && !isSway_) {
+		speed_ = WALK_SPEED;
 	}
-	if (!isLockOn && !isSway) {
-		speed = MAX_SPEED;
+	if (!isLockOn_ && !isSway_) {
+		speed_ = MAX_SPEED;
 	}
 }
 
@@ -148,33 +148,33 @@ void Player::Sway()
 	//入力情報を得ておく
 	bool input = false;
 	if (Input::Instance()->isKeyTrigger(DIK_TAB) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_A)) {
-		if (!isKnockBack)
+		if (!isKnockBack_)
 			input = true;
 	}
 
 	//キーが押されていてかつスウェイを行っていなければスウェイをさせる
-	if (input && !isSway) {
-		isSway = true;
+	if (input && !isSway_) {
+		isSway_ = true;
 		//入力したときに速度を変更(1回のみ)
-		speed = SWAY_SPEED;
+		speed_ = SWAY_SPEED;
 	}
 
 	//スウェイ中の処理
-	if (isSway) {
+	if (isSway_) {
 		//速度を徐々に減らす
-		speed -= 2.0f;
+		speed_ -= 2.0f;
 		//自機がロックオン状態の場合は歩き、そうでない場合は走りの速度まで戻す
-		if (!isLockOn) {
-			if (speed <= MAX_SPEED) {
-				speed = MAX_SPEED;
-				isSway = false;
+		if (!isLockOn_) {
+			if (speed_ <= MAX_SPEED) {
+				speed_ = MAX_SPEED;
+				isSway_ = false;
 			}
 		}
 		else
 		{
-			if (speed <= WALK_SPEED) {
-				speed = WALK_SPEED;
-				isSway = false;
+			if (speed_ <= WALK_SPEED) {
+				speed_ = WALK_SPEED;
+				isSway_ = false;
 			}
 		}
 	}
@@ -182,20 +182,20 @@ void Player::Sway()
 
 void Player::Guard()
 {
-	isGuard = false;
+	isGuard_ = false;
 	if (Input::Instance()->isKey(DIK_E) || Input::Instance()->isPad(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-		if (!isKnockBack) {
-			isGuard = true;
-			speed = 0;
+		if (!isKnockBack_) {
+			isGuard_ = true;
+			speed_ = 0;
 		}
 	}
 	//ロックオンをやめたときは移動速度を戻す
-	if (Input::Instance()->isPadRelease(XINPUT_GAMEPAD_LEFT_SHOULDER) || Input::Instance()->isKeyRelease(DIK_E)) { speed = MAX_SPEED; }
+	if (Input::Instance()->isPadRelease(XINPUT_GAMEPAD_LEFT_SHOULDER) || Input::Instance()->isKeyRelease(DIK_E)) { speed_ = MAX_SPEED; }
 }
 
 void Player::Attack()
 {
-	isHit = false;
+	isHit_ = false;
 
 	bool isAllAttackFalse = true;
 	for (int i = 0; i < attackInfo.size(); i++) {
@@ -205,7 +205,7 @@ void Player::Attack()
 
 	if (isAllAttackFalse) {
 		if (Input::Instance()->isKeyTrigger(DIK_SPACE) || Input::Instance()->isPadTrigger(XINPUT_GAMEPAD_X)) {
-			if (!isKnockBack)
+			if (!isKnockBack_)
 				attackInfo[0].isAttack = true;
 		}
 	}
@@ -217,21 +217,21 @@ void Player::Attack()
 			insidenceFrame_++;
 		}
 		else {
-			speed = 0.0f;
+			speed_ = 0.0f;
 			if (detectionFrame_ < attackInfo[i].detectionFrame) {
 
-				if (stepSpeed >= 0.0f) {
-					stepSpeed = attackInfo[i].stepDistance;
-					Vec3 stepVec = forwardVec * stepSpeed;
-					position += stepVec;
-					stepSpeed -= 2.0f;
+				if (stepSpeed_ >= 0.0f) {
+					stepSpeed_ = attackInfo[i].stepDistance;
+					Vec3 stepVec = forwardVec_ * stepSpeed_;
+					position_ += stepVec;
+					stepSpeed_ -= 2.0f;
 				}
 
 				detectionFrame_++;
-				isHit = true;
-				damage = attackInfo[i].damageAmount;
-				valueKBackVel = attackInfo[i].knockBackPower;
-				attackVec = forwardVec;
+				isHit_ = true;
+				damage_ = attackInfo[i].damageAmount;
+				valueKBackVel_ = attackInfo[i].knockBackPower;
+				attackVec = forwardVec_;
 			}
 			else {
 				if (rigidityFrame_ < attackInfo[i].rigidityFrame) {
@@ -245,7 +245,7 @@ void Player::Attack()
 							insidenceFrame_ = 0;
 							detectionFrame_ = 0;
 							rigidityFrame_ = 0;
-							stepSpeed = 0.0f;
+							stepSpeed_ = 0.0f;
 						}
 					}
 				}
@@ -254,9 +254,9 @@ void Player::Attack()
 					insidenceFrame_ = 0;
 					detectionFrame_ = 0;
 					rigidityFrame_ = 0;
-					speed = MAX_SPEED;
-					is1Hit = true;
-					stepSpeed = 0.0f;
+					speed_ = MAX_SPEED;
+					is1Hit_ = true;
+					stepSpeed_ = 0.0f;
 				}
 			}
 		}
@@ -266,22 +266,22 @@ void Player::Attack()
 void Player::KnockBack(const Vec3& attackVec)
 {
 	//スウェイ中の処理
-	if (isKnockBack) {
-		Vec3 kBackVec = attackVec * kBackVel;
+	if (isKnockBack_) {
+		Vec3 kBackVec = attackVec * kBackVel_;
 		//速度を徐々に減らす
-		kBackVel -= 2.0f;
-		stunTimer++;
+		kBackVel_ -= 2.0f;
+		stunTimer_++;
 
-		if (kBackVel <= 0.0f) {
-			kBackVel = 0.0f;
+		if (kBackVel_ <= 0.0f) {
+			kBackVel_ = 0.0f;
 		}
 
-		if (stunTimer > MAX_STUN_TIMER) {
-			isKnockBack = false;
-			stunTimer = 0;
+		if (stunTimer_ > MAX_STUN_TIMER) {
+			isKnockBack_ = false;
+			stunTimer_ = 0;
 		}
 
-		position += kBackVec;
+		position_ += kBackVec;
 	}
 	//else
 	//{
@@ -364,15 +364,15 @@ void Player::LoadAttackInfoFromCSV()
 
 void Player::Init()
 {
-	position = Vec3(-900, -20, 0);
+	position_ = Vec3(-900, -20, 0);
 }
 
 void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
 {	
-	this->enemyNearPos = enemyNearPos;
-	bodySphere.center = position.ConvertXMVECTOR();
-	object.ChangePosition(position.ConvertXMFLOAT3());
-	attackPos = position + forwardVec * ATTACK_RANGE;
+	this->enemyNearPos_ = enemyNearPos;
+	bodySphere.center = position_.ConvertXMVECTOR();
+	object_.ChangePosition(position_.ConvertXMFLOAT3());
+	attackPos = position_ + forwardVec_ * ATTACK_RANGE;
 	attackPos.y += 10;
 	attackSphere.center = attackPos.ConvertXMVECTOR();
 	sphere.ChangePosition(attackPos.ConvertXMFLOAT3());
@@ -385,22 +385,22 @@ void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
 
 void Player::Draw()
 {
-	object.Draw();
-	if (isHit) {
+	object_.Draw();
+	if (isHit_) {
 		sphere.Draw();
 	}
 }
 
 void Player::Damage(int damage)
 {
-	HP -= damage;
-	stunTimer = 0;
-	if (HP <= 0) {
+	HP_ -= damage;
+	stunTimer_ = 0;
+	if (HP_ <= 0) {
 		Dead();
 	}
 }
 
 void Player::Dead()
 {
-	isAlive = false;
+	isAlive_ = false;
 }

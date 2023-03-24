@@ -43,31 +43,31 @@ private:
 
 	//メンバ変数
 	//プレイヤーモデルのデータ
-	Object3D object;			//モデル
+	Object3D object_;			//モデル
 	Object3D sphere;			//球
-	Vec3 position;				//座標
-	float radius;				//半径
-	float speed;				//速度
-	Vec3 forwardVec;			//正面ベクトル
-	Vec3 previousForwardVec;	//１フレーム前の正面ベクトル
-	bool isAlive;				//生存フラグ
-	bool isSway;				//スウェイフラグ
-	bool isLockOn;				//ロックオンフラグ
-	Vec3 enemyNearPos;			//一番近い敵の座標
-	bool isGuard;				//ガードフラグ
-	bool isHit;					//攻撃判定があるときのみ上がるフラグ
-	int HP;						//ヒットポイント
-	int damage;					//敵に与えるダメージ
-	bool is1Hit;				//当たり判定トリガーフラグ
-	float stepSpeed;			//攻撃時のステップの速度
+	Vec3 position_;				//座標
+	float radius_;				//半径
+	float speed_;				//速度
+	Vec3 forwardVec_;			//正面ベクトル
+	Vec3 previousForwardVec_;	//１フレーム前の正面ベクトル
+	bool isAlive_;				//生存フラグ
+	bool isSway_;				//スウェイフラグ
+	bool isLockOn_;				//ロックオンフラグ
+	Vec3 enemyNearPos_;			//一番近い敵の座標
+	bool isGuard_;				//ガードフラグ
+	bool isHit_;					//攻撃判定があるときのみ上がるフラグ
+	int HP_;						//ヒットポイント
+	int damage_;					//敵に与えるダメージ
+	bool is1Hit_;				//当たり判定トリガーフラグ
+	float stepSpeed_;			//攻撃時のステップの速度
 
-	vector<AttackInfo> attackInfo;
+	vector<AttackInfo> attackInfo;	//csvファイルから読み取った情報を格納しておくコンテナ
 
 	//ノックバック用
-	bool isKnockBack;
-	float kBackVel;			//自分のノックバックに使う加速度
-	float valueKBackVel;	//敵をノックバックさせるために敵に渡す加速度
-	int stunTimer;			//スタンのタイマー
+	bool isKnockBack_;
+	float kBackVel_;			//自分のノックバックに使う加速度
+	float valueKBackVel_;	//敵をノックバックさせるために敵に渡す加速度
+	int stunTimer_;			//スタンのタイマー
 
 	//攻撃用
 	int insidenceFrame_;//発生フレーム
@@ -124,22 +124,22 @@ public:
 	void Dead();
 
 	//ゲッタ
-	Vec3 GetPos() { return position; }
-	float GetRadius() { return radius; }
-	bool GetIsAlive() { return isAlive; }
-	bool GetIsHit() { return isHit; }
+	Vec3 GetPos() { return position_; }
+	float GetRadius() { return radius_; }
+	bool GetIsAlive() { return isAlive_; }
+	bool GetIsHit() { return isHit_; }
 	Sphere GetBodySphere() { return bodySphere; }
 	Sphere GetAttackSphere() { return attackSphere; }
 	Vec3 GetAttackPos() { return attackPos; }
-	float GetDamage() { return damage; }
+	float GetDamage() { return damage_; }
 	float GetAttackRadius() { return ATTACK_RADIUS; }
-	bool GetIs1Hit() { return is1Hit; }
+	bool GetIs1Hit() { return is1Hit_; }
 	Vec3 GetAttackVec() { return attackVec; }
-	float GetValueKBackVel() { return valueKBackVel; }
+	float GetValueKBackVel() { return valueKBackVel_; }
 
 	//セッタ
-	void SetPos(const Vec3& value) { position = value; }
-	void SetIsKnockBack(bool value) { isKnockBack = value; }
-	void SetIs1Hit(bool value) { is1Hit = value; }
-	void SetkBackVel(float value) { kBackVel = value; }
+	void SetPos(const Vec3& value) { position_ = value; }
+	void SetIsKnockBack(bool value) { isKnockBack_ = value; }
+	void SetIs1Hit(bool value) { is1Hit_ = value; }
+	void SetkBackVel(float value) { kBackVel_ = value; }
 };
