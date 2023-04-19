@@ -62,7 +62,7 @@ void GameScene::Update()
 	enemyCount = 0;
 
 	player.Update(EnemyManager::Instance()->GetAttackVec(), EnemyManager::Instance()->GetNearPos());
-	EnemyManager::Instance()->Update(player);
+	//EnemyManager::Instance()->Update(player);
 	EnemyManager::Instance()->CD_PushBackPlayer(player);
 }
 

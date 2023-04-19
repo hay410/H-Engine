@@ -199,6 +199,8 @@ void Player::Attack()
 
 	bool isAllAttackFalse = true;
 	for (int i = 0; i < attackInfo.size(); i++) {
+		AttackInfo empty;
+		sendAttackInfo = empty;
 		if (attackInfo[i].isAttack == false)continue;
 		isAllAttackFalse = false;
 	}
@@ -212,6 +214,8 @@ void Player::Attack()
 
 	for (int i = 0; i < attackInfo.size(); i++) {
 		if (!attackInfo[i].isAttack)continue;
+
+		sendAttackInfo = attackInfo[i];
 
 		if (insidenceFrame_ < attackInfo[i].insidenceFrame) {
 			insidenceFrame_++;
@@ -354,6 +358,9 @@ void Player::LoadAttackInfoFromCSV()
 			}
 			j++;
 		}
+		a.startVec.Normalize();
+		a.endVec.Normalize();
+
 		attackInfo.push_back(a);
 
 		j = 0;
@@ -376,6 +383,8 @@ void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
 	attackPos.y += 10;
 	attackSphere.center = attackPos.ConvertXMVECTOR();
 	sphere.ChangePosition(attackPos.ConvertXMFLOAT3());
+	melee_.CommonUpdate(position_, forwardVec_);
+	melee_.Update(sendAttackInfo);
 	Move();
 	Sway();
 	KnockBack(attackVec);
@@ -386,6 +395,7 @@ void Player::Update(const Vec3& attackVec, const Vec3& enemyNearPos)
 void Player::Draw()
 {
 	object_.Draw();
+	melee_.Draw(object_.GetRotationMat(), sendAttackInfo);
 	if (isHit_) {
 		sphere.Draw();
 	}

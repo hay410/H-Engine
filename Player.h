@@ -62,6 +62,7 @@ private:
 	float stepSpeed_;			//攻撃時のステップの速度
 
 	vector<AttackInfo> attackInfo;	//csvファイルから読み取った情報を格納しておくコンテナ
+	AttackInfo sendAttackInfo;		//近接攻撃クラスに送るためのやつ
 
 	//ノックバック用
 	bool isKnockBack_;
@@ -73,6 +74,7 @@ private:
 	int insidenceFrame_;//発生フレーム
 	int detectionFrame_;//判定フレーム
 	int rigidityFrame_;//硬直フレーム
+	Melee melee_;
 
 	//当たり判定用
 	Sphere bodySphere;

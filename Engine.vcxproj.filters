@@ -243,6 +243,9 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>アプリケーション\敵関係</Filter>
     </ClCompile>
+    <ClCompile Include="Melee.cpp">
+      <Filter>アプリケーション\プレイヤー関係</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>アプリケーション\敵関係</Filter>
+    </ClInclude>
+    <ClInclude Include="Melee.h">
+      <Filter>アプリケーション\プレイヤー関係</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

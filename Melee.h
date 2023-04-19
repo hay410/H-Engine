@@ -27,6 +27,8 @@ struct AttackInfo {
 class Melee
 {
 private:
+	const Vec3 standerdVec = Vec3(1, 0, 0);
+
 	//ê√ìIÉÅÉìÉoïœêî
 	static Object3D melee_;
 	static Vec3 playerForwardVec_;
@@ -43,6 +45,7 @@ private:
 	Vec3 endVec_;
 	Vec3 edgeVec_ = Vec3(0, 1.0, 0);
 	Vec3 directionVec_ = Vec3(1.0, 0, 0);
+	XMVECTOR startQ, endQ, updateQ;
 
 public:
 	
@@ -50,6 +53,6 @@ public:
 	Melee();
 	static void Load();
 	static void CommonUpdate(const Vec3& pPos, const Vec3& pFVec);
-	void Update(bool isAttack, const AttackInfo& attackInfo);
-	void Draw();
+	void Update(const AttackInfo& attackInfo);
+	void Draw(const XMMATRIX& parentMatRot, const AttackInfo& attackInfo);
 };
