@@ -12,7 +12,7 @@ Player::Player()
 	position_ = XMFLOAT3( 0, 0, 0);
 	object_.ChangeScale({ 1.5,1.5,1.5 });
 	sphere.ChangeScale({ 10,10,10 });
-	forwardVec_ = Vec3(0, 0, 1);
+	forwardVec_ = Vec3(1, 0, 0);
 	radius_ = 20.0f;
 	previousForwardVec_ = forwardVec_;
 	speed_ = MAX_SPEED;
@@ -196,10 +196,10 @@ void Player::Guard()
 void Player::Attack()
 {
 	isHit_ = false;
+	AttackInfo empty;
 
 	bool isAllAttackFalse = true;
 	for (int i = 0; i < attackInfo.size(); i++) {
-		AttackInfo empty;
 		sendAttackInfo = empty;
 		if (attackInfo[i].isAttack == false)continue;
 		isAllAttackFalse = false;
@@ -255,6 +255,7 @@ void Player::Attack()
 				}
 				else {
 					attackInfo[i].isAttack = false;
+					//sendAttackInfo = empty;
 					insidenceFrame_ = 0;
 					detectionFrame_ = 0;
 					rigidityFrame_ = 0;

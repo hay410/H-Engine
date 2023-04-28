@@ -36,8 +36,7 @@ private:
 
 	//ƒƒ“ƒo•Ï”
 	Vec3 position_;
-	bool isMelee_;
-	string name_;
+	bool isAttack;
 	int insidenceFrame_;
 	int detectionFrame_;
 	int rigidityFrame_;

@@ -8,8 +8,6 @@ Vec3 Melee::playerPos_;
 Melee::Melee()
 {
 	melee_ = {};
-	isMelee_ = false;
-	name_ = "";
 	insidenceFrame_ = 0;
 	detectionFrame_ = 0;
 	rigidityFrame_ = 0;
@@ -36,8 +34,6 @@ void Melee::CommonUpdate(const Vec3& pPos, const Vec3& pFVec)
 
 void Melee::Update(const AttackInfo& attackInfo)
 {
-	//endVec_.Normalize();
-	
 	//îÒçUåÇéûÇÃèàóù
 	if (!attackInfo.isAttack) {
 		
@@ -45,19 +41,25 @@ void Melee::Update(const AttackInfo& attackInfo)
 	//çUåÇéû
 	else {
 
+
 		if (insidenceFrame_ < attackInfo.insidenceFrame) {
-			insidenceFrame_++;
+			melee_.DoNotDisplay();
+			detectionFrame_ = 0;
+			rigidityFrame_ = 0;
 			edgeVec_ = attackInfo.startVec;
 			//Yê¨ï™
 			Vec3 endVecElementXaxis = Vec3(attackInfo.endVec.x, 0, attackInfo.endVec.z);
+			endVecElementXaxis.Normalize();
 			float angleX = endVecElementXaxis.Dot(standerdVec);
 			angleX = acos(angleX);
+
 			//Xê¨ï™
 			Vec3 endVecElementYaxis = Vec3(attackInfo.endVec.x, attackInfo.endVec.y, 0);
+			endVecElementYaxis.Normalize();
 			float angleY = endVecElementYaxis.Dot(standerdVec);
 			angleY = acos(angleY);
 
-			if (attackInfo.endVec.x < 0)angleX *= -1;
+			if (attackInfo.endVec.z < 0)angleX *= -1;
 			if (attackInfo.endVec.y < 0)angleY *= -1;
 
 			XMMATRIX buff = melee_.GetRotationMat();
@@ -87,11 +89,14 @@ void Melee::Update(const AttackInfo& attackInfo)
 			startQ = XMQuaternionNormalize(startQ);
 
 			updateQ = startQ;
+
+			insidenceFrame_++;
 		}
 		else {
-			
 			if (detectionFrame_ < attackInfo.detectionFrame) {
+				melee_.DisplayOnScreen();
 				float rate = static_cast<float>(detectionFrame_) / static_cast<float>(attackInfo.detectionFrame);
+				//rate = HEase::InSine(rate);
 				updateQ = XMQuaternionSlerp(startQ, endQ, rate);
 
 				detectionFrame_++;
@@ -102,12 +107,14 @@ void Melee::Update(const AttackInfo& attackInfo)
 					rigidityFrame_++;
 				}
 				else {
+					melee_.DoNotDisplay();
 					insidenceFrame_ = 0;
 					detectionFrame_ = 0;
-					rigidityFrame_ = 0;	
+					rigidityFrame_ = 0;
 				}
 			}
 		}
+
 		melee_.AssignmentRotationMat(XMMatrixRotationQuaternion(updateQ));
 		edgeVec_ = Vec3(updateQ);
 		edgeVec_.Normalize();
@@ -121,8 +128,8 @@ void Melee::Update(const AttackInfo& attackInfo)
 void Melee::Draw(const XMMATRIX& parentMatRot, const AttackInfo& attackInfo)
 {
 	melee_.MulRotationMat(parentMatRot);
-	if (attackInfo.isAttack) {
+	if (melee_.GetIsDisplay()) {
 		melee_.Draw();
-		melee_.InitRotation();
 	}
+	melee_.InitRotation();
 }
