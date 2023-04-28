@@ -6,6 +6,7 @@ Vec3 Melee::playerForwardVec_;
 Vec3 Melee::playerPos_;
 
 Melee::Melee()
+
 {
 	melee_ = {};
 	insidenceFrame_ = 0;
